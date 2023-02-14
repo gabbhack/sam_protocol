@@ -39,7 +39,7 @@ template tempString[T](startValue: string): var T =
   var temp = startValue
   T(temp)
 
-func build*(str: var BuilderStringTypes): string =
+func build*(str: var BuilderStringTypes): lent string =
   string(str).add '\n'
   string(str)
 
