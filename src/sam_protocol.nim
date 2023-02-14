@@ -36,6 +36,8 @@ type
   BuilderStringTypes* = HelloString | SessionCreateString
 
 
+{.push inline.}
+
 template tempString[T](startValue: string): var T =
   var temp = startValue
   T(temp)
@@ -133,3 +135,5 @@ func withOutboundQuantity*(str: var SessionCreateString, outboundQuantity = 5): 
   ## Number of outbound tunnels. 5 by default
   string(str).add fmt" outbound.quantity={outboundQuantity}"
   str
+
+{.pop.}
