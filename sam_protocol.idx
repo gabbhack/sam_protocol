@@ -1,0 +1,37 @@
+Stream	sam_protocol.html#Stream	StyleType.Stream	
+Datagram	sam_protocol.html#Datagram	StyleType.Datagram	
+Raw	sam_protocol.html#Raw	StyleType.Raw	
+StyleType	sam_protocol.html#StyleType	sam_protocol: StyleType	
+DSA_SHA1	sam_protocol.html#DSA_SHA1	SignatureType.DSA_SHA1	
+ECDSA_SHA256_P256	sam_protocol.html#ECDSA_SHA256_P256	SignatureType.ECDSA_SHA256_P256	
+ECDSA_SHA384_P384	sam_protocol.html#ECDSA_SHA384_P384	SignatureType.ECDSA_SHA384_P384	
+ECDSA_SHA512_P521	sam_protocol.html#ECDSA_SHA512_P521	SignatureType.ECDSA_SHA512_P521	
+RSA_SHA256_2048	sam_protocol.html#RSA_SHA256_2048	SignatureType.RSA_SHA256_2048	
+RSA_SHA384_3072	sam_protocol.html#RSA_SHA384_3072	SignatureType.RSA_SHA384_3072	
+RSA_SHA512_4096	sam_protocol.html#RSA_SHA512_4096	SignatureType.RSA_SHA512_4096	
+EdDSA_SHA512_Ed25519	sam_protocol.html#EdDSA_SHA512_Ed25519	SignatureType.EdDSA_SHA512_Ed25519	
+EdDSA_SHA512_Ed25519ph	sam_protocol.html#EdDSA_SHA512_Ed25519ph	SignatureType.EdDSA_SHA512_Ed25519ph	
+RedDSA_SHA512_Ed25519	sam_protocol.html#RedDSA_SHA512_Ed25519	SignatureType.RedDSA_SHA512_Ed25519	
+SignatureType	sam_protocol.html#SignatureType	sam_protocol: SignatureType	
+Message	sam_protocol.html#Message	sam_protocol: Message	
+HelloString	sam_protocol.html#HelloString	sam_protocol: HelloString	
+SessionCreateString	sam_protocol.html#SessionCreateString	sam_protocol: SessionCreateString	
+BuilderStringTypes	sam_protocol.html#BuilderStringTypes	sam_protocol: BuilderStringTypes	
+build	sam_protocol.html#build,BuilderStringTypes	sam_protocol: build(str: var BuilderStringTypes): lent string	
+hello	sam_protocol.html#hello.t,typedesc[Message]	sam_protocol: hello(selfTy: typedesc[Message]): var HelloString	
+withMinVersion	sam_protocol.html#withMinVersion,HelloString,sinkstring	sam_protocol: withMinVersion(str: var HelloString; minVersion: sink string): var HelloString	
+withMaxVersion	sam_protocol.html#withMaxVersion,HelloString,sinkstring	sam_protocol: withMaxVersion(str: var HelloString; maxVersion: sink string): var HelloString	
+withUser	sam_protocol.html#withUser,HelloString,sinkstring	sam_protocol: withUser(str: var HelloString; user: sink string): var HelloString	
+withPassword	sam_protocol.html#withPassword,HelloString,sinkstring	sam_protocol: withPassword(str: var HelloString; password: sink string): var HelloString	
+sessionCreate	sam_protocol.html#sessionCreate.t,typedesc[Message],StyleType,sinkstring,sinkstring	sam_protocol: sessionCreate(selfTy: typedesc[Message]; style: StyleType;\n              nickname, destination: sink string): var SessionCreateString	
+withSignatureType	sam_protocol.html#withSignatureType,SessionCreateString,SignatureType	sam_protocol: withSignatureType(str: var SessionCreateString;\n                  signatureType: SignatureType = DSA_SHA1): var SessionCreateString	
+withPort	sam_protocol.html#withPort,SessionCreateString,int	sam_protocol: withPort(str: var SessionCreateString; port: int): var SessionCreateString	
+withHost	sam_protocol.html#withHost,SessionCreateString,sinkstring	sam_protocol: withHost(str: var SessionCreateString; host: sink string): var SessionCreateString	
+withFromPort	sam_protocol.html#withFromPort,SessionCreateString,int	sam_protocol: withFromPort(str: var SessionCreateString; fromPort = 0): var SessionCreateString	
+withToPort	sam_protocol.html#withToPort,SessionCreateString,int	sam_protocol: withToPort(str: var SessionCreateString; toPort = 0): var SessionCreateString	
+withProtocol	sam_protocol.html#withProtocol,SessionCreateString,int	sam_protocol: withProtocol(str: var SessionCreateString; protocol = 18): var SessionCreateString	
+withHeader	sam_protocol.html#withHeader,SessionCreateString	sam_protocol: withHeader(str: var SessionCreateString; header = false): var SessionCreateString	
+withInboundLength	sam_protocol.html#withInboundLength,SessionCreateString,int	sam_protocol: withInboundLength(str: var SessionCreateString; inboundLength = 3): var SessionCreateString	
+withOutboundLength	sam_protocol.html#withOutboundLength,SessionCreateString,int	sam_protocol: withOutboundLength(str: var SessionCreateString; outboundLength = 3): var SessionCreateString	
+withInboundQuantity	sam_protocol.html#withInboundQuantity,SessionCreateString,int	sam_protocol: withInboundQuantity(str: var SessionCreateString; inboundQuantity = 5): var SessionCreateString	
+withOutboundQuantity	sam_protocol.html#withOutboundQuantity,SessionCreateString,int	sam_protocol: withOutboundQuantity(str: var SessionCreateString; outboundQuantity = 5): var SessionCreateString	
