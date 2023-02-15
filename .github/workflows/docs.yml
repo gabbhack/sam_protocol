@@ -18,6 +18,7 @@ jobs:
       - name: Set up Nim
         uses: jiro4989/setup-nim-action@v1
         with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           nim-version: stable
 
       - name: Build docs

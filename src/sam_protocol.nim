@@ -247,4 +247,5 @@ template pong*(selfTy: typedesc[Message]): var PongString =
 func withText*[T: PingString | PongString](self: var T, text: sink string): var T =
   string(self).add fmt" {text}"
   self
+
 {.pop.}
