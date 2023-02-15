@@ -1,3 +1,4 @@
+ParseError	sam_protocol.html#ParseError	sam_protocol: ParseError	
 Stream	sam_protocol.html#Stream	StyleType.Stream	
 Datagram	sam_protocol.html#Datagram	StyleType.Datagram	
 Raw	sam_protocol.html#Raw	StyleType.Raw	
@@ -15,14 +16,46 @@ EdDSA_SHA512_Ed25519	sam_protocol.html#EdDSA_SHA512_Ed25519	SignatureType.EdDSA_
 EdDSA_SHA512_Ed25519ph	sam_protocol.html#EdDSA_SHA512_Ed25519ph	SignatureType.EdDSA_SHA512_Ed25519ph	
 RedDSA_SHA512_Ed25519	sam_protocol.html#RedDSA_SHA512_Ed25519	SignatureType.RedDSA_SHA512_Ed25519	
 SignatureType	sam_protocol.html#SignatureType	sam_protocol: SignatureType	
+Ok	sam_protocol.html#Ok	ResultType.Ok	
+Noversion	sam_protocol.html#Noversion	ResultType.Noversion	
+I2PError	sam_protocol.html#I2PError	ResultType.I2PError	
+DuplicatedID	sam_protocol.html#DuplicatedID	ResultType.DuplicatedID	
+DuplicatedDest	sam_protocol.html#DuplicatedDest	ResultType.DuplicatedDest	
+InvalidKey	sam_protocol.html#InvalidKey	ResultType.InvalidKey	
+InvalidID	sam_protocol.html#InvalidID	ResultType.InvalidID	
+CantReachPeer	sam_protocol.html#CantReachPeer	ResultType.CantReachPeer	
+Timeout	sam_protocol.html#Timeout	ResultType.Timeout	
+KeyNotFound	sam_protocol.html#KeyNotFound	ResultType.KeyNotFound	
+PeerNotFound	sam_protocol.html#PeerNotFound	ResultType.PeerNotFound	
+ResultType	sam_protocol.html#ResultType	sam_protocol: ResultType	
+HelloReply	sam_protocol.html#HelloReply	AnswerType.HelloReply	
+SessionStatus	sam_protocol.html#SessionStatus	AnswerType.SessionStatus	
+StreamStatus	sam_protocol.html#StreamStatus	AnswerType.StreamStatus	
+NamingReply	sam_protocol.html#NamingReply	AnswerType.NamingReply	
+DestReply	sam_protocol.html#DestReply	AnswerType.DestReply	
+Ping	sam_protocol.html#Ping	AnswerType.Ping	
+Pong	sam_protocol.html#Pong	AnswerType.Pong	
+DatagramReceived	sam_protocol.html#DatagramReceived	AnswerType.DatagramReceived	
+RawReceived	sam_protocol.html#RawReceived	AnswerType.RawReceived	
+AnswerType	sam_protocol.html#AnswerType	sam_protocol: AnswerType	
+HelloAnswer	sam_protocol.html#HelloAnswer	sam_protocol: HelloAnswer	
+SessionAnswer	sam_protocol.html#SessionAnswer	sam_protocol: SessionAnswer	
+StreamAnswer	sam_protocol.html#StreamAnswer	sam_protocol: StreamAnswer	
+NamingAnswer	sam_protocol.html#NamingAnswer	sam_protocol: NamingAnswer	
+DestAnswer	sam_protocol.html#DestAnswer	sam_protocol: DestAnswer	
+PingAnswer	sam_protocol.html#PingAnswer	sam_protocol: PingAnswer	
+PongAnswer	sam_protocol.html#PongAnswer	sam_protocol: PongAnswer	
+DatagramAnswer	sam_protocol.html#DatagramAnswer	sam_protocol: DatagramAnswer	
+RawAnswer	sam_protocol.html#RawAnswer	sam_protocol: RawAnswer	
+Answer	sam_protocol.html#Answer	sam_protocol: Answer	
 Message	sam_protocol.html#Message	sam_protocol: Message	
 HelloString	sam_protocol.html#HelloString	sam_protocol: HelloString	
 SessionCreateString	sam_protocol.html#SessionCreateString	sam_protocol: SessionCreateString	
+SessionAddString	sam_protocol.html#SessionAddString	sam_protocol: SessionAddString	
+SessionRemoveString	sam_protocol.html#SessionRemoveString	sam_protocol: SessionRemoveString	
 StreamConnectString	sam_protocol.html#StreamConnectString	sam_protocol: StreamConnectString	
 StreamAcceptString	sam_protocol.html#StreamAcceptString	sam_protocol: StreamAcceptString	
 StreamForwardString	sam_protocol.html#StreamForwardString	sam_protocol: StreamForwardString	
-SessionAddString	sam_protocol.html#SessionAddString	sam_protocol: SessionAddString	
-SessionRemoveString	sam_protocol.html#SessionRemoveString	sam_protocol: SessionRemoveString	
 NamingLookupString	sam_protocol.html#NamingLookupString	sam_protocol: NamingLookupString	
 DestGenerateString	sam_protocol.html#DestGenerateString	sam_protocol: DestGenerateString	
 PingString	sam_protocol.html#PingString	sam_protocol: PingString	
@@ -60,3 +93,4 @@ destGenerate	sam_protocol.html#destGenerate.t,typedesc[Message]	sam_protocol: de
 ping	sam_protocol.html#ping.t,typedesc[Message]	sam_protocol: ping(selfTy: typedesc[Message]): var PingString	
 pong	sam_protocol.html#pong.t,typedesc[Message]	sam_protocol: pong(selfTy: typedesc[Message]): var PongString	
 withText	sam_protocol.html#withText,T,sinkstring	sam_protocol: withText[T: PingString | PongString](self: var T; text: sink string): var T	
+fromString	sam_protocol.html#fromString,typedesc[Answer],sinkstring	sam_protocol: fromString(selfTy: typedesc[Answer]; text: sink string): Answer	
