@@ -5,6 +5,8 @@ type
     Stream = "STREAM"
     Datagram = "DATAGRAM"
     Raw = "RAW"
+    Primary = "PRIMARY"
+    Master = "MASTER"
 
   SignatureType* = enum
     DSA_SHA1
@@ -177,4 +179,6 @@ func withSSL*(str: var StreamForwardString, ssl = false): var StreamForwardStrin
   string(str).add fmt" SSL={ssl}"
   str
 
+
+# 
 {.pop.}

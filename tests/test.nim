@@ -15,6 +15,8 @@ block:
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
 doAssert $StyleType.Raw == "RAW"
+doAssert $StyleType.Primary == "PRIMARY"
+doAssert $StyleType.Master == "MASTER"
 
 doAssert Message.hello.string == "HELLO VERSION"
 doAssert Message.hello.withMinVersion("1.0").string == "HELLO VERSION MIN=1.0"
