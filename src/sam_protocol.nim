@@ -34,12 +34,14 @@ type
   SessionCreateString* = distinct string
   StreamConnectString* = distinct string
   StreamAcceptString* = distinct string
+  StreamForwardString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
     SessionCreateString |
     StreamConnectString |
-    StreamAcceptString
+    StreamAcceptString |
+    StreamForwardString
 
 
 {.push inline.}
@@ -52,6 +54,28 @@ func build*(str: var BuilderStringTypes): lent string =
   ## Test foo bar kek
   string(str).add '\n'
   string(str)
+
+
+# General
+func withPort*[T: SessionCreateString | StreamForwardString](str: var T, port: int): var T =
+  string(str).add fmt" PORT={port}"
+  str
+
+func withHost*[T: SessionCreateString | StreamForwardString](str: var T, host: sink string): var T =
+  string(str).add fmt" HOST={host}"
+  str
+
+func withFromPort*[T: SessionCreateString | StreamConnectString](str: var T, fromPort = 0): var T =
+  string(str).add fmt" FROM_PORT={fromPort}"
+  str
+
+func withToPort*[T: SessionCreateString | StreamConnectString](str: var T, toPort = 0): var T=
+  string(str).add fmt" TO_PORT={toPort}"
+  str
+
+func withSilent*[T: StreamAcceptString | StreamConnectString | StreamForwardString](str: var T, silent = false): var T =
+  string(str).add fmt" SILENT={silent}"
+  str
 
 # HELLO
 template hello*(selfTy: typedesc[Message]): var HelloString =
@@ -93,26 +117,6 @@ func withSignatureType*(str: var SessionCreateString, signatureType: SignatureTy
   string(str).add fmt" SIGNATURE_TYPE={signatureType}"
   str
 
-func withPort*(str: var SessionCreateString, port: int): var SessionCreateString =
-  ## Required for DATAGRAM and RAW, invalid for STREAM
-  string(str).add fmt" PORT={port}"
-  str
-
-func withHost*(str: var SessionCreateString, host: sink string): var SessionCreateString =
-  ## Optional for DATAGRAM and RAW, invalid for STREAM
-  string(str).add fmt" HOST={host}"
-  str
-
-func withFromPort*[T: SessionCreateString | StreamConnectString](str: var T, fromPort = 0): var T =
-  ## SAM 3.2 or higher only, default 0
-  string(str).add fmt" FROM_PORT={fromPort}"
-  str
-
-func withToPort*[T: SessionCreateString | StreamConnectString](str: var T, toPort = 0): var T=
-  ## SAM 3.2 or higher only, default 0
-  string(str).add fmt" TO_PORT={toPort}"
-  str
-
 func withProtocol*(str: var SessionCreateString, protocol = 18): var SessionCreateString =
   ## SAM 3.2 or higher only, for STYLE=RAW only, default 18
   string(str).add fmt" PROTOCOL={protocol}"
@@ -143,6 +147,7 @@ func withOutboundQuantity*(str: var SessionCreateString, outboundQuantity = 5): 
   string(str).add fmt" outbound.quantity={outboundQuantity}"
   str
 
+
 # STREAM CONNECT
 template streamConnect*(selfTy: typedesc[Message], nickname, destination: string): var StreamConnectString =
   ## This establishes a new virtual connection from the local session whose ID is $nickname to the specified peer. 
@@ -152,10 +157,6 @@ template streamConnect*(selfTy: typedesc[Message], nickname, destination: string
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[StreamConnectString]("STREAM CONNECT ID=" & nickname & " DESTINATION=" & destination)
 
-func withSilent*[T: StreamAcceptString | StreamConnectString](str: var T, silent = false): var T =
-  ## Default false
-  string(str).add fmt" SILENT={silent}"
-  str
 
 # STREAM ACCEPT
 template streamAccept*(selfTy: typedesc[Message], nickname: string): var StreamAcceptString =
@@ -163,5 +164,17 @@ template streamAccept*(selfTy: typedesc[Message], nickname: string): var StreamA
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[StreamAcceptString]("STREAM ACCEPT ID=" & nickname)
+
+# STREAM FORWARD
+template streamForward*(selfTy: typedesc[Message], nickname: string, port: int): var StreamForwardString =
+  ## Returns distinct string with "STREAM FORWARD ID=... DESTINATION=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[StreamForwardString]("STREAM FORWARD ID=" & nickname & " PORT=" & $port)
+
+func withSSL*(str: var StreamForwardString, ssl = false): var StreamForwardString =
+  ## SAM 3.2 or higher only, default false
+  string(str).add fmt" SSL={ssl}"
+  str
 
 {.pop.}
