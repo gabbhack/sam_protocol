@@ -77,3 +77,20 @@ doAssert Message.ping.string == "PING"
 doAssert Message.ping.withText("123").string == "PING 123"
 doAssert Message.pong.string == "PONG"
 doAssert Message.pong.withText("123").string == "PONG 123"
+
+block:
+  let answer = Answer.fromString("HELLO REPLY RESULT=OK VERSION=3.1")
+  doAssert answer.kind == HelloReply
+  doAssert answer.hello.kind == Ok
+  doAssert answer.hello.version == "3.1"
+
+block:
+  let answer = Answer.fromString("HELLO REPLY RESULT=NOVERSION")
+  doAssert answer.kind == HelloReply
+  doAssert answer.hello.kind == Noversion
+
+block:
+  let answer = Answer.fromString("HELLO REPLY RESULT=I2P_ERROR MESSAGE=BAD")
+  doAssert answer.kind == HelloReply
+  doAssert answer.hello.kind == I2PError
+  doAssert answer.hello.message == "BAD"
