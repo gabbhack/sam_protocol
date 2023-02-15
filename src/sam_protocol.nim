@@ -7,25 +7,25 @@ type
     Raw = "RAW"
 
   SignatureType* = enum
-    DSA_SHA1 = "DSA-SHA1"
+    DSA_SHA1
     ## Legacy Router Identities and Destinations
-    ECDSA_SHA256_P256 = "ECDSA_SHA256_P256"
+    ECDSA_SHA256_P256
     ## Recent Destinations
-    ECDSA_SHA384_P384 = "ECDSA_SHA384_P384"
+    ECDSA_SHA384_P384
     ## Rarely used for Destinations
-    ECDSA_SHA512_P521 = "ECDSA_SHA512_P521"
+    ECDSA_SHA512_P521
     ## Rarely used for Destinations
-    RSA_SHA256_2048 = "RSA_SHA256_2048"
+    RSA_SHA256_2048
     ## Offline signing, never used for Router Identities or Destinations
-    RSA_SHA384_3072 = "RSA_SHA384_3072"
+    RSA_SHA384_3072
     ## Offline signing, never used for Router Identities or Destinations
-    RSA_SHA512_4096 = "RSA_SHA512_4096"
+    RSA_SHA512_4096
     ## Offline signing, never used for Router Identities or Destinations
-    EdDSA_SHA512_Ed25519 = "EdDSA_SHA512_Ed25519"
+    EdDSA_SHA512_Ed25519
     ## Recent Router Identities and Destinations
-    EdDSA_SHA512_Ed25519ph = "EdDSA_SHA512_Ed25519ph"
+    EdDSA_SHA512_Ed25519ph
     ## Offline signing, never used for Router Identities or Destinations
-    RedDSA_SHA512_Ed25519 = "RedDSA_SHA512_Ed25519"
+    RedDSA_SHA512_Ed25519
     ## For Destinations and encrypted leasesets only, never used for Router Identities
 
   Message* = object
@@ -43,6 +43,7 @@ template tempString[T](startValue: string): var T =
   T(temp)
 
 func build*(str: var BuilderStringTypes): lent string =
+  ## Test foo bar kek
   string(str).add '\n'
   string(str)
 
@@ -79,7 +80,7 @@ template sessionCreate*(selfTy: typedesc[Message], style: StyleType, nickname, d
   ## Returns distinct string with "SESSION CREATE STYLE=... ID=... DESTINATION=..." as the start value
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
-  tempString[SessionCreateString](fmt"SESSION CREATE STYLE={style} ID={nickname} DESTINATION={destination}")
+  tempString[SessionCreateString]("SESSION CREATE STYLE=" & $style & " ID=" & nickname & " DESTINATION=" & destination)
 
 func withSignatureType*(str: var SessionCreateString, signatureType: SignatureType = DSA_SHA1): var SessionCreateString =
   ## SAM 3.1 or higher only, for DESTINATION=TRANSIENT only, default DSA_SHA1
