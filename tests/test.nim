@@ -11,6 +11,7 @@ block:
   checkTemp(StreamConnectString)
   checkTemp(StreamAcceptString)
   checkTemp(StreamForwardString)
+  checkTemp(SessionAddString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -49,3 +50,13 @@ doAssert Message.streamForward("user", 1234).string == "STREAM FORWARD ID=user P
 doAssert Message.streamForward("user", 1234).withHost("host").string == "STREAM FORWARD ID=user PORT=1234 HOST=host"
 doAssert Message.streamForward("user", 1234).withSilent(true).string == "STREAM FORWARD ID=user PORT=1234 SILENT=true"
 doAssert Message.streamForward("user", 1234).withSSL(true).string == "STREAM FORWARD ID=user PORT=1234 SSL=true"
+
+doAssert Message.sessionAdd(Stream, "user").string == "SESSION ADD STYLE=STREAM ID=user"
+doAssert Message.sessionAdd(Stream, "user").withPort(1234).string == "SESSION ADD STYLE=STREAM ID=user PORT=1234"
+doAssert Message.sessionAdd(Stream, "user").withHost("host").string == "SESSION ADD STYLE=STREAM ID=user HOST=host"
+doAssert Message.sessionAdd(Stream, "user").withFromPort(1234).string == "SESSION ADD STYLE=STREAM ID=user FROM_PORT=1234"
+doAssert Message.sessionAdd(Stream, "user").withToPort(1234).string == "SESSION ADD STYLE=STREAM ID=user TO_PORT=1234"
+doAssert Message.sessionAdd(Stream, "user").withProtocol(1234).string == "SESSION ADD STYLE=STREAM ID=user PROTOCOL=1234"
+doAssert Message.sessionAdd(Stream, "user").withListenPort(1234).string == "SESSION ADD STYLE=STREAM ID=user LISTEN_PORT=1234"
+doAssert Message.sessionAdd(Stream, "user").withListenProtocol(1234).string == "SESSION ADD STYLE=STREAM ID=user LISTEN_PROTOCOL=1234"
+doAssert Message.sessionAdd(Stream, "user").withHeader(true).string == "SESSION ADD STYLE=STREAM ID=user HEADER=true"

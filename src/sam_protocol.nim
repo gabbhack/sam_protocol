@@ -37,13 +37,15 @@ type
   StreamConnectString* = distinct string
   StreamAcceptString* = distinct string
   StreamForwardString* = distinct string
+  SessionAddString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
     SessionCreateString |
     StreamConnectString |
     StreamAcceptString |
-    StreamForwardString
+    StreamForwardString |
+    SessionAddString
 
 
 {.push inline.}
@@ -59,25 +61,34 @@ func build*(str: var BuilderStringTypes): lent string =
 
 
 # General
-func withPort*[T: SessionCreateString | StreamForwardString](str: var T, port: int): var T =
+func withPort*[T: SessionCreateString | StreamForwardString | SessionAddString](str: var T, port: int): var T =
   string(str).add fmt" PORT={port}"
   str
 
-func withHost*[T: SessionCreateString | StreamForwardString](str: var T, host: sink string): var T =
+func withHost*[T: SessionCreateString | StreamForwardString | SessionAddString](str: var T, host: sink string): var T =
   string(str).add fmt" HOST={host}"
   str
 
-func withFromPort*[T: SessionCreateString | StreamConnectString](str: var T, fromPort = 0): var T =
+func withFromPort*[T: SessionCreateString | StreamConnectString | SessionAddString](str: var T, fromPort = 0): var T =
   string(str).add fmt" FROM_PORT={fromPort}"
   str
 
-func withToPort*[T: SessionCreateString | StreamConnectString](str: var T, toPort = 0): var T=
+func withToPort*[T: SessionCreateString | StreamConnectString | SessionAddString](str: var T, toPort = 0): var T=
   string(str).add fmt" TO_PORT={toPort}"
   str
 
 func withSilent*[T: StreamAcceptString | StreamConnectString | StreamForwardString](str: var T, silent = false): var T =
   string(str).add fmt" SILENT={silent}"
   str
+
+func withProtocol*[T: SessionCreateString | SessionAddString](str: var T, protocol = 18): var T =
+  string(str).add fmt" PROTOCOL={protocol}"
+  str
+
+func withHeader*[T: SessionCreateString | SessionAddString](str: var T, header = false): var T =
+  string(str).add fmt" HEADER={header}"
+  str
+
 
 # HELLO
 template hello*(selfTy: typedesc[Message]): var HelloString =
@@ -117,16 +128,6 @@ template sessionCreate*(selfTy: typedesc[Message], style: StyleType, nickname, d
 func withSignatureType*(str: var SessionCreateString, signatureType: SignatureType = DSA_SHA1): var SessionCreateString =
   ## SAM 3.1 or higher only, for DESTINATION=TRANSIENT only, default DSA_SHA1
   string(str).add fmt" SIGNATURE_TYPE={signatureType}"
-  str
-
-func withProtocol*(str: var SessionCreateString, protocol = 18): var SessionCreateString =
-  ## SAM 3.2 or higher only, for STYLE=RAW only, default 18
-  string(str).add fmt" PROTOCOL={protocol}"
-  str
-
-func withHeader*(str: var SessionCreateString, header = false): var SessionCreateString =
-  ## SAM 3.2 or higher only, for STYLE=RAW only, default false
-  string(str).add fmt" HEADER={header}"
   str
 
 func withInboundLength*(str: var SessionCreateString, inboundLength = 3): var SessionCreateString =
@@ -180,5 +181,20 @@ func withSSL*(str: var StreamForwardString, ssl = false): var StreamForwardStrin
   str
 
 
-# 
+# SESSION ADD
+template sessionAdd*(selfTy: typedesc[Message], style: StyleType, nickname: string): var SessionAddString =
+  ## Returns distinct string with "SESSION ADD STYLE=... ID=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[SessionAddString]("SESSION ADD STYLE=" & $style & " ID=" & nickname)
+
+func withListenPort*(str: var SessionAddString, listenPort = 0): var SessionAddString =
+  ## For inbound traffic, default is the FROM_PORT value.
+  string(str).add fmt" LISTEN_PORT={listenPort}"
+  str
+
+func withListenProtocol*(str: var SessionAddString, listenProtocol = 18): var SessionAddString =
+  string(str).add fmt" LISTEN_PROTOCOL={listenProtocol}"
+  str
+
 {.pop.}
