@@ -14,6 +14,7 @@ block:
   checkTemp(SessionAddString)
   checkTemp(SessionRemoveString)
   checkTemp(NamingLookupString)
+  checkTemp(DestGenerateString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -66,3 +67,6 @@ doAssert Message.sessionAdd(Stream, "user").withHeader(true).string == "SESSION 
 doAssert Message.sessionRemove("user").string == "SESSION REMOVE ID=user"
 
 doAssert Message.namingLookup("reg.i2p").string == "NAMING LOOKUP NAME=reg.i2p"
+
+doAssert Message.destGenerate.string == "DEST GENERATE"
+doAssert Message.destGenerate.withSignatureType(DSA_SHA1).string == "DEST GENERATE SIGNATURE_TYPE=DSA_SHA1"

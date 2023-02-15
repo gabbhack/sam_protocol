@@ -40,6 +40,7 @@ type
   SessionAddString* = distinct string
   SessionRemoveString* = distinct string
   NamingLookupString* = distinct string
+  DestGenerateString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
@@ -49,7 +50,8 @@ type
     StreamForwardString |
     SessionAddString |
     SessionRemoveString |
-    NamingLookupString
+    NamingLookupString |
+    DestGenerateString
 
 
 {.push inline.}
@@ -93,6 +95,10 @@ func withHeader*[T: SessionCreateString | SessionAddString](str: var T, header =
   string(str).add fmt" HEADER={header}"
   str
 
+func withSignatureType*[T: SessionCreateString | DestGenerateString](str: var T, signatureType: SignatureType = DSA_SHA1): var T =
+  string(str).add fmt" SIGNATURE_TYPE={signatureType}"
+  str
+
 
 # HELLO
 template hello*(selfTy: typedesc[Message]): var HelloString =
@@ -128,11 +134,6 @@ template sessionCreate*(selfTy: typedesc[Message], style: StyleType, nickname, d
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[SessionCreateString]("SESSION CREATE STYLE=" & $style & " ID=" & nickname & " DESTINATION=" & destination)
-
-func withSignatureType*(str: var SessionCreateString, signatureType: SignatureType = DSA_SHA1): var SessionCreateString =
-  ## SAM 3.1 or higher only, for DESTINATION=TRANSIENT only, default DSA_SHA1
-  string(str).add fmt" SIGNATURE_TYPE={signatureType}"
-  str
 
 func withInboundLength*(str: var SessionCreateString, inboundLength = 3): var SessionCreateString =
   ## Number of hops of an inbound tunnel. 3 by default; lower value is faster but dangerous
@@ -216,5 +217,13 @@ template namingLookup*(selfTy: typedesc[Message], name: string): var NamingLooku
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[NamingLookupString]("NAMING LOOKUP NAME=" & name)
+
+
+# DEST GENERATE
+template destGenerate*(selfTy: typedesc[Message]): var DestGenerateString =
+  ## Returns distinct string with "DEST GENERATE" as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[DestGenerateString]("DEST GENERATE")
 
 {.pop.}
