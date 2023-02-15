@@ -41,6 +41,8 @@ type
   SessionRemoveString* = distinct string
   NamingLookupString* = distinct string
   DestGenerateString* = distinct string
+  PingString* = distinct string
+  PongString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
@@ -51,7 +53,9 @@ type
     SessionAddString |
     SessionRemoveString |
     NamingLookupString |
-    DestGenerateString
+    DestGenerateString |
+    PingString |
+    PongString
 
 
 {.push inline.}
@@ -226,4 +230,21 @@ template destGenerate*(selfTy: typedesc[Message]): var DestGenerateString =
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[DestGenerateString]("DEST GENERATE")
 
+
+# PING/PONG
+template ping*(selfTy: typedesc[Message]): var PingString =
+  ## Returns distinct string with "PING" as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[PingString]("PING")
+
+template pong*(selfTy: typedesc[Message]): var PongString =
+  ## Returns distinct string with "PONG" as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[PongString]("PONG")
+
+func withText*[T: PingString | PongString](self: var T, text: sink string): var T =
+  string(self).add fmt" {text}"
+  self
 {.pop.}

@@ -15,6 +15,8 @@ block:
   checkTemp(SessionRemoveString)
   checkTemp(NamingLookupString)
   checkTemp(DestGenerateString)
+  checkTemp(PingString)
+  checkTemp(PongString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -70,3 +72,8 @@ doAssert Message.namingLookup("reg.i2p").string == "NAMING LOOKUP NAME=reg.i2p"
 
 doAssert Message.destGenerate.string == "DEST GENERATE"
 doAssert Message.destGenerate.withSignatureType(DSA_SHA1).string == "DEST GENERATE SIGNATURE_TYPE=DSA_SHA1"
+
+doAssert Message.ping.string == "PING"
+doAssert Message.ping.withText("123").string == "PING 123"
+doAssert Message.pong.string == "PONG"
+doAssert Message.pong.withText("123").string == "PONG 123"
