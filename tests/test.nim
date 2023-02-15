@@ -13,6 +13,7 @@ block:
   checkTemp(StreamForwardString)
   checkTemp(SessionAddString)
   checkTemp(SessionRemoveString)
+  checkTemp(NamingLookupString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -63,3 +64,5 @@ doAssert Message.sessionAdd(Stream, "user").withListenProtocol(1234).string == "
 doAssert Message.sessionAdd(Stream, "user").withHeader(true).string == "SESSION ADD STYLE=STREAM ID=user HEADER=true"
 
 doAssert Message.sessionRemove("user").string == "SESSION REMOVE ID=user"
+
+doAssert Message.namingLookup("reg.i2p").string == "NAMING LOOKUP NAME=reg.i2p"

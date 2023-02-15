@@ -39,6 +39,7 @@ type
   StreamForwardString* = distinct string
   SessionAddString* = distinct string
   SessionRemoveString* = distinct string
+  NamingLookupString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
@@ -47,7 +48,8 @@ type
     StreamAcceptString |
     StreamForwardString |
     SessionAddString |
-    SessionRemoveString
+    SessionRemoveString |
+    NamingLookupString
 
 
 {.push inline.}
@@ -199,11 +201,20 @@ func withListenProtocol*(str: var SessionAddString, listenProtocol = 18): var Se
   string(str).add fmt" LISTEN_PROTOCOL={listenProtocol}"
   str
 
+
 # SESSION REMOVE
 template sessionRemove*(selfTy: typedesc[Message], nickname: string): var SessionRemoveString =
   ## Returns distinct string with "SESSION REMOVE ID=..." as the start value
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[SessionRemoveString]("SESSION REMOVE ID=" & nickname)
+
+
+# NAMING LOOKUP
+template namingLookup*(selfTy: typedesc[Message], name: string): var NamingLookupString =
+  ## Returns distinct string with "NAMING LOOKUP NAME=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[NamingLookupString]("NAMING LOOKUP NAME=" & name)
 
 {.pop.}
