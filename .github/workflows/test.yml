@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+    path-ignore:
+      - 'README.md'
+  pull_request:
+    branches:
+      - master
+    path-ignore:
+      - 'README.md'
+  release:
+    types: [published]
+
+jobs:
+  build:
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip-ci]')"
+    strategy:
+      matrix:
+        nim: ['1.0.x', '1.2.x', '1.4.x', '1.6.x', 'stable']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache nimble
+        id: cache-nimble
+        uses: actions/cache@v1
+        with:
+          path: ~/.nimble
+          key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
+        if: runner.os != 'Windows'
+
+      - name: Set up Nim
+        uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: ${{ matrix.nim }}
+
+      - name: Install dependencies
+        run: nimble install -d -y
+
+      - name: Run tests
+        run: nimble test
+
+      - name: Try to build docs
+        run: nimble docs
