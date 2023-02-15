@@ -1,6 +1,8 @@
 Stream	sam_protocol.html#Stream	StyleType.Stream	
 Datagram	sam_protocol.html#Datagram	StyleType.Datagram	
 Raw	sam_protocol.html#Raw	StyleType.Raw	
+Primary	sam_protocol.html#Primary	StyleType.Primary	
+Master	sam_protocol.html#Master	StyleType.Master	
 StyleType	sam_protocol.html#StyleType	sam_protocol: StyleType	
 DSA_SHA1	sam_protocol.html#DSA_SHA1	SignatureType.DSA_SHA1	
 ECDSA_SHA256_P256	sam_protocol.html#ECDSA_SHA256_P256	SignatureType.ECDSA_SHA256_P256	
@@ -16,22 +18,45 @@ SignatureType	sam_protocol.html#SignatureType	sam_protocol: SignatureType
 Message	sam_protocol.html#Message	sam_protocol: Message	
 HelloString	sam_protocol.html#HelloString	sam_protocol: HelloString	
 SessionCreateString	sam_protocol.html#SessionCreateString	sam_protocol: SessionCreateString	
+StreamConnectString	sam_protocol.html#StreamConnectString	sam_protocol: StreamConnectString	
+StreamAcceptString	sam_protocol.html#StreamAcceptString	sam_protocol: StreamAcceptString	
+StreamForwardString	sam_protocol.html#StreamForwardString	sam_protocol: StreamForwardString	
+SessionAddString	sam_protocol.html#SessionAddString	sam_protocol: SessionAddString	
+SessionRemoveString	sam_protocol.html#SessionRemoveString	sam_protocol: SessionRemoveString	
+NamingLookupString	sam_protocol.html#NamingLookupString	sam_protocol: NamingLookupString	
+DestGenerateString	sam_protocol.html#DestGenerateString	sam_protocol: DestGenerateString	
+PingString	sam_protocol.html#PingString	sam_protocol: PingString	
+PongString	sam_protocol.html#PongString	sam_protocol: PongString	
 BuilderStringTypes	sam_protocol.html#BuilderStringTypes	sam_protocol: BuilderStringTypes	
 build	sam_protocol.html#build,BuilderStringTypes	sam_protocol: build(str: var BuilderStringTypes): lent string	
+withPort	sam_protocol.html#withPort,T,int	sam_protocol: withPort[T: SessionCreateString | StreamForwardString | SessionAddString](\n    str: var T; port: int): var T	
+withHost	sam_protocol.html#withHost,T,sinkstring	sam_protocol: withHost[T: SessionCreateString | StreamForwardString | SessionAddString](\n    str: var T; host: sink string): var T	
+withFromPort	sam_protocol.html#withFromPort,T,int	sam_protocol: withFromPort[T: SessionCreateString | StreamConnectString | SessionAddString](\n    str: var T; fromPort = 0): var T	
+withToPort	sam_protocol.html#withToPort,T,int	sam_protocol: withToPort[T: SessionCreateString | StreamConnectString | SessionAddString](\n    str: var T; toPort = 0): var T	
+withSilent	sam_protocol.html#withSilent,T	sam_protocol: withSilent[T: StreamAcceptString | StreamConnectString | StreamForwardString](\n    str: var T; silent = false): var T	
+withProtocol	sam_protocol.html#withProtocol,T,int	sam_protocol: withProtocol[T: SessionCreateString | SessionAddString](str: var T;\n    protocol = 18): var T	
+withHeader	sam_protocol.html#withHeader,T	sam_protocol: withHeader[T: SessionCreateString | SessionAddString](str: var T; header = false): var T	
+withSignatureType	sam_protocol.html#withSignatureType,T,SignatureType	sam_protocol: withSignatureType[T: SessionCreateString | DestGenerateString](str: var T;\n    signatureType: SignatureType = DSA_SHA1): var T	
 hello	sam_protocol.html#hello.t,typedesc[Message]	sam_protocol: hello(selfTy: typedesc[Message]): var HelloString	
 withMinVersion	sam_protocol.html#withMinVersion,HelloString,sinkstring	sam_protocol: withMinVersion(str: var HelloString; minVersion: sink string): var HelloString	
 withMaxVersion	sam_protocol.html#withMaxVersion,HelloString,sinkstring	sam_protocol: withMaxVersion(str: var HelloString; maxVersion: sink string): var HelloString	
 withUser	sam_protocol.html#withUser,HelloString,sinkstring	sam_protocol: withUser(str: var HelloString; user: sink string): var HelloString	
 withPassword	sam_protocol.html#withPassword,HelloString,sinkstring	sam_protocol: withPassword(str: var HelloString; password: sink string): var HelloString	
-sessionCreate	sam_protocol.html#sessionCreate.t,typedesc[Message],StyleType,sinkstring,sinkstring	sam_protocol: sessionCreate(selfTy: typedesc[Message]; style: StyleType;\n              nickname, destination: sink string): var SessionCreateString	
-withSignatureType	sam_protocol.html#withSignatureType,SessionCreateString,SignatureType	sam_protocol: withSignatureType(str: var SessionCreateString;\n                  signatureType: SignatureType = DSA_SHA1): var SessionCreateString	
-withPort	sam_protocol.html#withPort,SessionCreateString,int	sam_protocol: withPort(str: var SessionCreateString; port: int): var SessionCreateString	
-withHost	sam_protocol.html#withHost,SessionCreateString,sinkstring	sam_protocol: withHost(str: var SessionCreateString; host: sink string): var SessionCreateString	
-withFromPort	sam_protocol.html#withFromPort,SessionCreateString,int	sam_protocol: withFromPort(str: var SessionCreateString; fromPort = 0): var SessionCreateString	
-withToPort	sam_protocol.html#withToPort,SessionCreateString,int	sam_protocol: withToPort(str: var SessionCreateString; toPort = 0): var SessionCreateString	
-withProtocol	sam_protocol.html#withProtocol,SessionCreateString,int	sam_protocol: withProtocol(str: var SessionCreateString; protocol = 18): var SessionCreateString	
-withHeader	sam_protocol.html#withHeader,SessionCreateString	sam_protocol: withHeader(str: var SessionCreateString; header = false): var SessionCreateString	
+sessionCreate	sam_protocol.html#sessionCreate.t,typedesc[Message],StyleType,string,string	sam_protocol: sessionCreate(selfTy: typedesc[Message]; style: StyleType;\n              nickname, destination: string): var SessionCreateString	
 withInboundLength	sam_protocol.html#withInboundLength,SessionCreateString,int	sam_protocol: withInboundLength(str: var SessionCreateString; inboundLength = 3): var SessionCreateString	
 withOutboundLength	sam_protocol.html#withOutboundLength,SessionCreateString,int	sam_protocol: withOutboundLength(str: var SessionCreateString; outboundLength = 3): var SessionCreateString	
 withInboundQuantity	sam_protocol.html#withInboundQuantity,SessionCreateString,int	sam_protocol: withInboundQuantity(str: var SessionCreateString; inboundQuantity = 5): var SessionCreateString	
 withOutboundQuantity	sam_protocol.html#withOutboundQuantity,SessionCreateString,int	sam_protocol: withOutboundQuantity(str: var SessionCreateString; outboundQuantity = 5): var SessionCreateString	
+streamConnect	sam_protocol.html#streamConnect.t,typedesc[Message],string,string	sam_protocol: streamConnect(selfTy: typedesc[Message]; nickname, destination: string): var StreamConnectString	
+streamAccept	sam_protocol.html#streamAccept.t,typedesc[Message],string	sam_protocol: streamAccept(selfTy: typedesc[Message]; nickname: string): var StreamAcceptString	
+streamForward	sam_protocol.html#streamForward.t,typedesc[Message],string,int	sam_protocol: streamForward(selfTy: typedesc[Message]; nickname: string; port: int): var StreamForwardString	
+withSSL	sam_protocol.html#withSSL,StreamForwardString	sam_protocol: withSSL(str: var StreamForwardString; ssl = false): var StreamForwardString	
+sessionAdd	sam_protocol.html#sessionAdd.t,typedesc[Message],StyleType,string	sam_protocol: sessionAdd(selfTy: typedesc[Message]; style: StyleType; nickname: string): var SessionAddString	
+withListenPort	sam_protocol.html#withListenPort,SessionAddString,int	sam_protocol: withListenPort(str: var SessionAddString; listenPort = 0): var SessionAddString	
+withListenProtocol	sam_protocol.html#withListenProtocol,SessionAddString,int	sam_protocol: withListenProtocol(str: var SessionAddString; listenProtocol = 18): var SessionAddString	
+sessionRemove	sam_protocol.html#sessionRemove.t,typedesc[Message],string	sam_protocol: sessionRemove(selfTy: typedesc[Message]; nickname: string): var SessionRemoveString	
+namingLookup	sam_protocol.html#namingLookup.t,typedesc[Message],string	sam_protocol: namingLookup(selfTy: typedesc[Message]; name: string): var NamingLookupString	
+destGenerate	sam_protocol.html#destGenerate.t,typedesc[Message]	sam_protocol: destGenerate(selfTy: typedesc[Message]): var DestGenerateString	
+ping	sam_protocol.html#ping.t,typedesc[Message]	sam_protocol: ping(selfTy: typedesc[Message]): var PingString	
+pong	sam_protocol.html#pong.t,typedesc[Message]	sam_protocol: pong(selfTy: typedesc[Message]): var PongString	
+withText	sam_protocol.html#withText,T,sinkstring	sam_protocol: withText[T: PingString | PongString](self: var T; text: sink string): var T	

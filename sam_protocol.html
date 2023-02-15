@@ -102,13 +102,33 @@ window.addEventListener('DOMContentLoaded', main);
   <a class="reference reference-toplevel" href="#7" id="57">Types</a>
   <ul class="simple simple-toc-section">
       <li><a class="reference" href="#BuilderStringTypes"
-    title="BuilderStringTypes = HelloString | SessionCreateString">BuilderStringTypes</a></li>
+    title="BuilderStringTypes = HelloString | SessionCreateString | StreamConnectString |
+    StreamAcceptString |
+    StreamForwardString |
+    SessionAddString |
+    SessionRemoveString |
+    NamingLookupString |
+    DestGenerateString |
+    PingString |
+    PongString">BuilderStringTypes</a></li>
+  <li><a class="reference" href="#DestGenerateString"
+    title="DestGenerateString = distinct string">DestGenerateString</a></li>
   <li><a class="reference" href="#HelloString"
     title="HelloString = distinct string">HelloString</a></li>
   <li><a class="reference" href="#Message"
     title="Message = object">Message</a></li>
+  <li><a class="reference" href="#NamingLookupString"
+    title="NamingLookupString = distinct string">NamingLookupString</a></li>
+  <li><a class="reference" href="#PingString"
+    title="PingString = distinct string">PingString</a></li>
+  <li><a class="reference" href="#PongString"
+    title="PongString = distinct string">PongString</a></li>
+  <li><a class="reference" href="#SessionAddString"
+    title="SessionAddString = distinct string">SessionAddString</a></li>
   <li><a class="reference" href="#SessionCreateString"
     title="SessionCreateString = distinct string">SessionCreateString</a></li>
+  <li><a class="reference" href="#SessionRemoveString"
+    title="SessionRemoveString = distinct string">SessionRemoveString</a></li>
   <li><a class="reference" href="#SignatureType"
     title="SignatureType = enum
   DSA_SHA1,                 ## Legacy Router Identities and Destinations
@@ -121,9 +141,16 @@ window.addEventListener('DOMContentLoaded', main);
   EdDSA_SHA512_Ed25519,     ## Recent Router Identities and Destinations
   EdDSA_SHA512_Ed25519ph,   ## Offline signing, never used for Router Identities or Destinations
   RedDSA_SHA512_Ed25519      ## For Destinations and encrypted leasesets only, never used for Router Identities">SignatureType</a></li>
+  <li><a class="reference" href="#StreamAcceptString"
+    title="StreamAcceptString = distinct string">StreamAcceptString</a></li>
+  <li><a class="reference" href="#StreamConnectString"
+    title="StreamConnectString = distinct string">StreamConnectString</a></li>
+  <li><a class="reference" href="#StreamForwardString"
+    title="StreamForwardString = distinct string">StreamForwardString</a></li>
   <li><a class="reference" href="#StyleType"
     title="StyleType = enum
-  Stream = &quot;STREAM&quot;, Datagram = &quot;DATAGRAM&quot;, Raw = &quot;RAW&quot;">StyleType</a></li>
+  Stream = &quot;STREAM&quot;, Datagram = &quot;DATAGRAM&quot;, Raw = &quot;RAW&quot;, Primary = &quot;PRIMARY&quot;,
+  Master = &quot;MASTER&quot;">StyleType</a></li>
 
   </ul>
 </li>
@@ -136,18 +163,22 @@ window.addEventListener('DOMContentLoaded', main);
 
   </ul>
   <ul class="simple nested-toc-section">withFromPort
-      <li><a class="reference" href="#withFromPort%2CSessionCreateString%2Cint"
-    title="withFromPort(str: var SessionCreateString; fromPort = 0): var SessionCreateString">withFromPort(str: var SessionCreateString; fromPort = 0): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withFromPort%2CT%2Cint"
+    title="withFromPort[T: SessionCreateString | StreamConnectString | SessionAddString](
+    str: var T; fromPort = 0): var T">withFromPort[T: SessionCreateString | StreamConnectString | SessionAddString](
+    str: var T; fromPort = 0): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withHeader
-      <li><a class="reference" href="#withHeader%2CSessionCreateString"
-    title="withHeader(str: var SessionCreateString; header = false): var SessionCreateString">withHeader(str: var SessionCreateString; header = false): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withHeader%2CT"
+    title="withHeader[T: SessionCreateString | SessionAddString](str: var T; header = false): var T">withHeader[T: SessionCreateString | SessionAddString](str: var T; header = false): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withHost
-      <li><a class="reference" href="#withHost%2CSessionCreateString%2Csinkstring"
-    title="withHost(str: var SessionCreateString; host: sink string): var SessionCreateString">withHost(str: var SessionCreateString; host: sink string): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withHost%2CT%2Csinkstring"
+    title="withHost[T: SessionCreateString | StreamForwardString | SessionAddString](
+    str: var T; host: sink string): var T">withHost[T: SessionCreateString | StreamForwardString | SessionAddString](
+    str: var T; host: sink string): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withInboundLength
@@ -158,6 +189,16 @@ window.addEventListener('DOMContentLoaded', main);
   <ul class="simple nested-toc-section">withInboundQuantity
       <li><a class="reference" href="#withInboundQuantity%2CSessionCreateString%2Cint"
     title="withInboundQuantity(str: var SessionCreateString; inboundQuantity = 5): var SessionCreateString">withInboundQuantity(str: var SessionCreateString; inboundQuantity = 5): var SessionCreateString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">withListenPort
+      <li><a class="reference" href="#withListenPort%2CSessionAddString%2Cint"
+    title="withListenPort(str: var SessionAddString; listenPort = 0): var SessionAddString">withListenPort(str: var SessionAddString; listenPort = 0): var SessionAddString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">withListenProtocol
+      <li><a class="reference" href="#withListenProtocol%2CSessionAddString%2Cint"
+    title="withListenProtocol(str: var SessionAddString; listenProtocol = 18): var SessionAddString">withListenProtocol(str: var SessionAddString; listenProtocol = 18): var SessionAddString</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withMaxVersion
@@ -186,25 +227,48 @@ window.addEventListener('DOMContentLoaded', main);
 
   </ul>
   <ul class="simple nested-toc-section">withPort
-      <li><a class="reference" href="#withPort%2CSessionCreateString%2Cint"
-    title="withPort(str: var SessionCreateString; port: int): var SessionCreateString">withPort(str: var SessionCreateString; port: int): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withPort%2CT%2Cint"
+    title="withPort[T: SessionCreateString | StreamForwardString | SessionAddString](
+    str: var T; port: int): var T">withPort[T: SessionCreateString | StreamForwardString | SessionAddString](
+    str: var T; port: int): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withProtocol
-      <li><a class="reference" href="#withProtocol%2CSessionCreateString%2Cint"
-    title="withProtocol(str: var SessionCreateString; protocol = 18): var SessionCreateString">withProtocol(str: var SessionCreateString; protocol = 18): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withProtocol%2CT%2Cint"
+    title="withProtocol[T: SessionCreateString | SessionAddString](str: var T;
+    protocol = 18): var T">withProtocol[T: SessionCreateString | SessionAddString](str: var T;
+    protocol = 18): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withSignatureType
-      <li><a class="reference" href="#withSignatureType%2CSessionCreateString%2CSignatureType"
-    title="withSignatureType(str: var SessionCreateString;
-                  signatureType: SignatureType = DSA_SHA1): var SessionCreateString">withSignatureType(str: var SessionCreateString;
-                  signatureType: SignatureType = DSA_SHA1): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withSignatureType%2CT%2CSignatureType"
+    title="withSignatureType[T: SessionCreateString | DestGenerateString](str: var T;
+    signatureType: SignatureType = DSA_SHA1): var T">withSignatureType[T: SessionCreateString | DestGenerateString](str: var T;
+    signatureType: SignatureType = DSA_SHA1): var T</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">withSilent
+      <li><a class="reference" href="#withSilent%2CT"
+    title="withSilent[T: StreamAcceptString | StreamConnectString | StreamForwardString](
+    str: var T; silent = false): var T">withSilent[T: StreamAcceptString | StreamConnectString | StreamForwardString](
+    str: var T; silent = false): var T</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">withSSL
+      <li><a class="reference" href="#withSSL%2CStreamForwardString"
+    title="withSSL(str: var StreamForwardString; ssl = false): var StreamForwardString">withSSL(str: var StreamForwardString; ssl = false): var StreamForwardString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">withText
+      <li><a class="reference" href="#withText%2CT%2Csinkstring"
+    title="withText[T: PingString | PongString](self: var T; text: sink string): var T">withText[T: PingString | PongString](self: var T; text: sink string): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withToPort
-      <li><a class="reference" href="#withToPort%2CSessionCreateString%2Cint"
-    title="withToPort(str: var SessionCreateString; toPort = 0): var SessionCreateString">withToPort(str: var SessionCreateString; toPort = 0): var SessionCreateString</a></li>
+      <li><a class="reference" href="#withToPort%2CT%2Cint"
+    title="withToPort[T: SessionCreateString | StreamConnectString | SessionAddString](
+    str: var T; toPort = 0): var T">withToPort[T: SessionCreateString | StreamConnectString | SessionAddString](
+    str: var T; toPort = 0): var T</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">withUser
@@ -218,16 +282,61 @@ window.addEventListener('DOMContentLoaded', main);
 <li>
   <a class="reference reference-toplevel" href="#18" id="68">Templates</a>
   <ul class="simple simple-toc-section">
-      <ul class="simple nested-toc-section">hello
+      <ul class="simple nested-toc-section">destGenerate
+      <li><a class="reference" href="#destGenerate.t%2Ctypedesc%5BMessage%5D"
+    title="destGenerate(selfTy: typedesc[Message]): var DestGenerateString">destGenerate(selfTy: typedesc[Message]): var DestGenerateString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">hello
       <li><a class="reference" href="#hello.t%2Ctypedesc%5BMessage%5D"
     title="hello(selfTy: typedesc[Message]): var HelloString">hello(selfTy: typedesc[Message]): var HelloString</a></li>
 
   </ul>
+  <ul class="simple nested-toc-section">namingLookup
+      <li><a class="reference" href="#namingLookup.t%2Ctypedesc%5BMessage%5D%2Cstring"
+    title="namingLookup(selfTy: typedesc[Message]; name: string): var NamingLookupString">namingLookup(selfTy: typedesc[Message]; name: string): var NamingLookupString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">ping
+      <li><a class="reference" href="#ping.t%2Ctypedesc%5BMessage%5D"
+    title="ping(selfTy: typedesc[Message]): var PingString">ping(selfTy: typedesc[Message]): var PingString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">pong
+      <li><a class="reference" href="#pong.t%2Ctypedesc%5BMessage%5D"
+    title="pong(selfTy: typedesc[Message]): var PongString">pong(selfTy: typedesc[Message]): var PongString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">sessionAdd
+      <li><a class="reference" href="#sessionAdd.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Cstring"
+    title="sessionAdd(selfTy: typedesc[Message]; style: StyleType; nickname: string): var SessionAddString">sessionAdd(selfTy: typedesc[Message]; style: StyleType; nickname: string): var SessionAddString</a></li>
+
+  </ul>
   <ul class="simple nested-toc-section">sessionCreate
-      <li><a class="reference" href="#sessionCreate.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Csinkstring%2Csinkstring"
+      <li><a class="reference" href="#sessionCreate.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Cstring%2Cstring"
     title="sessionCreate(selfTy: typedesc[Message]; style: StyleType;
-              nickname, destination: sink string): var SessionCreateString">sessionCreate(selfTy: typedesc[Message]; style: StyleType;
-              nickname, destination: sink string): var SessionCreateString</a></li>
+              nickname, destination: string): var SessionCreateString">sessionCreate(selfTy: typedesc[Message]; style: StyleType;
+              nickname, destination: string): var SessionCreateString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">sessionRemove
+      <li><a class="reference" href="#sessionRemove.t%2Ctypedesc%5BMessage%5D%2Cstring"
+    title="sessionRemove(selfTy: typedesc[Message]; nickname: string): var SessionRemoveString">sessionRemove(selfTy: typedesc[Message]; nickname: string): var SessionRemoveString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">streamAccept
+      <li><a class="reference" href="#streamAccept.t%2Ctypedesc%5BMessage%5D%2Cstring"
+    title="streamAccept(selfTy: typedesc[Message]; nickname: string): var StreamAcceptString">streamAccept(selfTy: typedesc[Message]; nickname: string): var StreamAcceptString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">streamConnect
+      <li><a class="reference" href="#streamConnect.t%2Ctypedesc%5BMessage%5D%2Cstring%2Cstring"
+    title="streamConnect(selfTy: typedesc[Message]; nickname, destination: string): var StreamConnectString">streamConnect(selfTy: typedesc[Message]; nickname, destination: string): var StreamConnectString</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">streamForward
+      <li><a class="reference" href="#streamForward.t%2Ctypedesc%5BMessage%5D%2Cstring%2Cint"
+    title="streamForward(selfTy: typedesc[Message]; nickname: string; port: int): var StreamForwardString">streamForward(selfTy: typedesc[Message]; nickname: string; port: int): var StreamForwardString</a></li>
 
   </ul>
 
@@ -250,19 +359,51 @@ class="link-seesrc" target="_blank">Source</a>
 <h1><a class="toc-backref" href="#7">Types</a></h1>
 <dl class="item">
 <div id="BuilderStringTypes">
-<dt><pre><a href="sam_protocol.html#BuilderStringTypes"><span class="Identifier">BuilderStringTypes</span></a> <span class="Other">=</span> <a href="sam_protocol.html#HelloString"><span class="Identifier">HelloString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a></pre></dt>
+<dt><pre><a href="sam_protocol.html#BuilderStringTypes"><span class="Identifier">BuilderStringTypes</span></a> <span class="Other">=</span> <a href="sam_protocol.html#HelloString"><span class="Identifier">HelloString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#StreamAcceptString"><span class="Identifier">StreamAcceptString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#SessionRemoveString"><span class="Identifier">SessionRemoveString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#NamingLookupString"><span class="Identifier">NamingLookupString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#DestGenerateString"><span class="Identifier">DestGenerateString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#PingString"><span class="Identifier">PingString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#PongString"><span class="Identifier">PongString</span></a></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L36"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L47"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L36" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L47" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="DestGenerateString">
+<dt><pre><a href="sam_protocol.html#DestGenerateString"><span class="Identifier">DestGenerateString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L43"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L43" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
 <div id="HelloString">
 <dt><pre><a href="sam_protocol.html#HelloString"><span class="Identifier">HelloString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L35"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="Message">
+<dt><pre><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a> <span class="Other">=</span> <span class="Keyword">object</span></pre></dt>
 <dd>
 
 
@@ -273,15 +414,51 @@ class="link-seesrc" target="_blank">Source</a>
 
 </dd>
 </div>
-<div id="Message">
-<dt><pre><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a> <span class="Other">=</span> <span class="Keyword">object</span></pre></dt>
+<div id="NamingLookupString">
+<dt><pre><a href="sam_protocol.html#NamingLookupString"><span class="Identifier">NamingLookupString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L31"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L42"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L31" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L42" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="PingString">
+<dt><pre><a href="sam_protocol.html#PingString"><span class="Identifier">PingString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L44"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L44" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="PongString">
+<dt><pre><a href="sam_protocol.html#PongString"><span class="Identifier">PongString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L45"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="SessionAddString">
+<dt><pre><a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L40"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L40" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -291,9 +468,21 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L34"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L36"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L34" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L36" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="SessionRemoveString">
+<dt><pre><a href="sam_protocol.html#SessionRemoveString"><span class="Identifier">SessionRemoveString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L41"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L41" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -313,15 +502,52 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L9"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L11"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L9" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L11" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="StreamAcceptString">
+<dt><pre><a href="sam_protocol.html#StreamAcceptString"><span class="Identifier">StreamAcceptString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L38"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L38" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="StreamConnectString">
+<dt><pre><a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L37"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L37" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="StreamForwardString">
+<dt><pre><a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a> <span class="Other">=</span> <span class="Keyword">distinct</span> <span class="Identifier">string</span></pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L39"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L39" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
 <div id="StyleType">
 <dt><pre><a href="sam_protocol.html#StyleType"><span class="Identifier">StyleType</span></a> <span class="Other">=</span> <span class="Keyword">enum</span>
-  <span class="Identifier">Stream</span> <span class="Other">=</span> <span class="StringLit">&quot;STREAM&quot;</span><span class="Other">,</span> <span class="Identifier">Datagram</span> <span class="Other">=</span> <span class="StringLit">&quot;DATAGRAM&quot;</span><span class="Other">,</span> <span class="Identifier">Raw</span> <span class="Other">=</span> <span class="StringLit">&quot;RAW&quot;</span></pre></dt>
+  <span class="Identifier">Stream</span> <span class="Other">=</span> <span class="StringLit">&quot;STREAM&quot;</span><span class="Other">,</span> <span class="Identifier">Datagram</span> <span class="Other">=</span> <span class="StringLit">&quot;DATAGRAM&quot;</span><span class="Other">,</span> <span class="Identifier">Raw</span> <span class="Other">=</span> <span class="StringLit">&quot;RAW&quot;</span><span class="Other">,</span> <span class="Identifier">Primary</span> <span class="Other">=</span> <span class="StringLit">&quot;PRIMARY&quot;</span><span class="Other">,</span>
+  <span class="Identifier">Master</span> <span class="Other">=</span> <span class="StringLit">&quot;MASTER&quot;</span></pre></dt>
 <dd>
 
 
@@ -343,48 +569,48 @@ class="link-seesrc" target="_blank">Source</a>
 
 Test foo bar kek
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L45"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L67"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L45" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L67" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withFromPort,SessionCreateString,int">
-<dt><pre><span class="Keyword">func</span> <a href="#withFromPort%2CSessionCreateString%2Cint"><span class="Identifier">withFromPort</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">fromPort</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withFromPort,T,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withFromPort%2CT%2Cint"><span class="Identifier">withFromPort</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">fromPort</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L100"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L82"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L82" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withHeader,SessionCreateString">
-<dt><pre><span class="Keyword">func</span> <a href="#withHeader%2CSessionCreateString"><span class="Identifier">withHeader</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">header</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withHeader,T">
+<dt><pre><span class="Keyword">func</span> <a href="#withHeader%2CT"><span class="Identifier">withHeader</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span>
+    <span class="Identifier">header</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L115"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L98"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L115" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L98" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withHost,SessionCreateString,sinkstring">
-<dt><pre><span class="Keyword">func</span> <a href="#withHost%2CSessionCreateString%2Csinkstring"><span class="Identifier">withHost</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">host</span><span class="Other">:</span> <span class="Identifier">sink</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withHost,T,sinkstring">
+<dt><pre><span class="Keyword">func</span> <a href="#withHost%2CT%2Csinkstring"><span class="Identifier">withHost</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span>
+    <span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">host</span><span class="Other">:</span> <span class="Identifier">sink</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L95"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L78"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L95" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L78" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -395,9 +621,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L120"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L142"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L120" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L142" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -408,9 +634,35 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L130"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L152"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L130" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L152" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="withListenPort,SessionAddString,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withListenPort%2CSessionAddString%2Cint"><span class="Identifier">withListenPort</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">;</span> <span class="Identifier">listenPort</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a> {.
+    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L200"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L200" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="withListenProtocol,SessionAddString,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withListenProtocol%2CSessionAddString%2Cint"><span class="Identifier">withListenProtocol</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">;</span> <span class="Identifier">listenProtocol</span> <span class="Other">=</span> <span class="DecNumber">18</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a> {.
+    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L205"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L205" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -421,9 +673,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L62"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L119"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L62" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L119" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -434,9 +686,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L57"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L114"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L57" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L114" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -447,9 +699,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L125"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L147"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L125" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L147" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -460,9 +712,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L135"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L157"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L135" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L157" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -473,15 +725,54 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L72"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L129"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L72" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L129" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withPort,SessionCreateString,int">
-<dt><pre><span class="Keyword">func</span> <a href="#withPort%2CSessionCreateString%2Cint"><span class="Identifier">withPort</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withPort,T,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withPort%2CT%2Cint"><span class="Identifier">withPort</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span>
+    <span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L74"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L74" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="withProtocol,T,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withProtocol%2CT%2Cint"><span class="Identifier">withProtocol</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span>
+    <span class="Identifier">protocol</span> <span class="Other">=</span> <span class="DecNumber">18</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L94"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L94" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="withSignatureType,T,SignatureType">
+<dt><pre><span class="Keyword">func</span> <a href="#withSignatureType%2CT%2CSignatureType"><span class="Identifier">withSignatureType</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#DestGenerateString"><span class="Identifier">DestGenerateString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span>
+    <span class="Identifier">signatureType</span><span class="Other">:</span> <a href="sam_protocol.html#SignatureType"><span class="Identifier">SignatureType</span></a> <span class="Other">=</span> <span class="Identifier">DSA_SHA1</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
+<dd>
+
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L102"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L102" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="withSilent,T">
+<dt><pre><span class="Keyword">func</span> <a href="#withSilent%2CT"><span class="Identifier">withSilent</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#StreamAcceptString"><span class="Identifier">StreamAcceptString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a> <span class="Operator">|</span>
+    <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">silent</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
@@ -492,43 +783,42 @@ class="link-seesrc" target="_blank">Source</a>
 
 </dd>
 </div>
-<div id="withProtocol,SessionCreateString,int">
-<dt><pre><span class="Keyword">func</span> <a href="#withProtocol%2CSessionCreateString%2Cint"><span class="Identifier">withProtocol</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">protocol</span> <span class="Other">=</span> <span class="DecNumber">18</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
+<div id="withSSL,StreamForwardString">
+<dt><pre><span class="Keyword">func</span> <a href="#withSSL%2CStreamForwardString"><span class="Identifier">withSSL</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a><span class="Other">;</span> <span class="Identifier">ssl</span> <span class="Other">=</span> <span class="Identifier">false</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a> {.
     <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L110"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L187"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L110" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L187" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withSignatureType,SessionCreateString,SignatureType">
-<dt><pre><span class="Keyword">func</span> <a href="#withSignatureType%2CSessionCreateString%2CSignatureType"><span class="Identifier">withSignatureType</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span>
-                       <span class="Identifier">signatureType</span><span class="Other">:</span> <a href="sam_protocol.html#SignatureType"><span class="Identifier">SignatureType</span></a> <span class="Other">=</span> <span class="Identifier">DSA_SHA1</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withText,T,sinkstring">
+<dt><pre><span class="Keyword">func</span> <a href="#withText%2CT%2Csinkstring"><span class="Identifier">withText</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#PingString"><span class="Identifier">PingString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#PongString"><span class="Identifier">PongString</span></a><span class="Other">]</span><span class="Other">(</span><span class="Identifier">self</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">sink</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.
+    <span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L85"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L247"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L85" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L247" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="withToPort,SessionCreateString,int">
-<dt><pre><span class="Keyword">func</span> <a href="#withToPort%2CSessionCreateString%2Cint"><span class="Identifier">withToPort</span></a><span class="Other">(</span><span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a><span class="Other">;</span> <span class="Identifier">toPort</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> {.
-    <span class="Identifier">inline</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="withToPort,T,int">
+<dt><pre><span class="Keyword">func</span> <a href="#withToPort%2CT%2Cint"><span class="Identifier">withToPort</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a> <span class="Operator">|</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a><span class="Other">]</span><span class="Other">(</span>
+    <span class="Identifier">str</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span><span class="Other">;</span> <span class="Identifier">toPort</span> <span class="Other">=</span> <span class="DecNumber">0</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">T</span> {.<span class="Identifier">inline</span>.}</pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L105"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L86"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L105" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L86" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -539,9 +829,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L67"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L124"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L67" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L124" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -550,6 +840,20 @@ class="link-seesrc" target="_blank">Source</a>
 <div class="section" id="18">
 <h1><a class="toc-backref" href="#18">Templates</a></h1>
 <dl class="item">
+<div id="destGenerate.t,typedesc[Message]">
+<dt><pre><span class="Keyword">template</span> <a href="#destGenerate.t%2Ctypedesc%5BMessage%5D"><span class="Identifier">destGenerate</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#DestGenerateString"><span class="Identifier">DestGenerateString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;DEST GENERATE&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L227"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L227" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
 <div id="hello.t,typedesc[Message]">
 <dt><pre><span class="Keyword">template</span> <a href="#hello.t%2Ctypedesc%5BMessage%5D"><span class="Identifier">hello</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#HelloString"><span class="Identifier">HelloString</span></a></pre></dt>
 <dd>
@@ -558,24 +862,138 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L51"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L108"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L51" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L108" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
-<div id="sessionCreate.t,typedesc[Message],StyleType,sinkstring,sinkstring">
-<dt><pre><span class="Keyword">template</span> <a href="#sessionCreate.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Csinkstring%2Csinkstring"><span class="Identifier">sessionCreate</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">style</span><span class="Other">:</span> <a href="sam_protocol.html#StyleType"><span class="Identifier">StyleType</span></a><span class="Other">;</span>
-                       <span class="Identifier">nickname</span><span class="Other">,</span> <span class="Identifier">destination</span><span class="Other">:</span> <span class="Identifier">sink</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a></pre></dt>
+<div id="namingLookup.t,typedesc[Message],string">
+<dt><pre><span class="Keyword">template</span> <a href="#namingLookup.t%2Ctypedesc%5BMessage%5D%2Cstring"><span class="Identifier">namingLookup</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">name</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#NamingLookupString"><span class="Identifier">NamingLookupString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;NAMING LOOKUP NAME=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L219"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L219" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="ping.t,typedesc[Message]">
+<dt><pre><span class="Keyword">template</span> <a href="#ping.t%2Ctypedesc%5BMessage%5D"><span class="Identifier">ping</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#PingString"><span class="Identifier">PingString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;PING&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L235"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L235" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="pong.t,typedesc[Message]">
+<dt><pre><span class="Keyword">template</span> <a href="#pong.t%2Ctypedesc%5BMessage%5D"><span class="Identifier">pong</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#PongString"><span class="Identifier">PongString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;PONG&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L241"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L241" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="sessionAdd.t,typedesc[Message],StyleType,string">
+<dt><pre><span class="Keyword">template</span> <a href="#sessionAdd.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Cstring"><span class="Identifier">sessionAdd</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">style</span><span class="Other">:</span> <a href="sam_protocol.html#StyleType"><span class="Identifier">StyleType</span></a><span class="Other">;</span>
+                    <span class="Identifier">nickname</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionAddString"><span class="Identifier">SessionAddString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;SESSION ADD STYLE=... ID=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L194"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L194" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="sessionCreate.t,typedesc[Message],StyleType,string,string">
+<dt><pre><span class="Keyword">template</span> <a href="#sessionCreate.t%2Ctypedesc%5BMessage%5D%2CStyleType%2Cstring%2Cstring"><span class="Identifier">sessionCreate</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">style</span><span class="Other">:</span> <a href="sam_protocol.html#StyleType"><span class="Identifier">StyleType</span></a><span class="Other">;</span>
+                       <span class="Identifier">nickname</span><span class="Other">,</span> <span class="Identifier">destination</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionCreateString"><span class="Identifier">SessionCreateString</span></a></pre></dt>
 <dd>
 
 <p>Returns distinct string with &quot;SESSION CREATE STYLE=... ID=... DESTINATION=...&quot; as the start value</p>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L79"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L136"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L79" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L136" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="sessionRemove.t,typedesc[Message],string">
+<dt><pre><span class="Keyword">template</span> <a href="#sessionRemove.t%2Ctypedesc%5BMessage%5D%2Cstring"><span class="Identifier">sessionRemove</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">nickname</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#SessionRemoveString"><span class="Identifier">SessionRemoveString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;SESSION REMOVE ID=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L211"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L211" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="streamAccept.t,typedesc[Message],string">
+<dt><pre><span class="Keyword">template</span> <a href="#streamAccept.t%2Ctypedesc%5BMessage%5D%2Cstring"><span class="Identifier">streamAccept</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">nickname</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#StreamAcceptString"><span class="Identifier">StreamAcceptString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;STREAM ACCEPT ID=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L174"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L174" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="streamConnect.t,typedesc[Message],string,string">
+<dt><pre><span class="Keyword">template</span> <a href="#streamConnect.t%2Ctypedesc%5BMessage%5D%2Cstring%2Cstring"><span class="Identifier">streamConnect</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">nickname</span><span class="Other">,</span> <span class="Identifier">destination</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#StreamConnectString"><span class="Identifier">StreamConnectString</span></a></pre></dt>
+<dd>
+
+<p>This establishes a new virtual connection from the local session whose ID is $nickname to the specified peer.</p>
+<p>Returns distinct string with &quot;STREAM CONNECT ID=... DESTINATION=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L164"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L164" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+</div>
+<div id="streamForward.t,typedesc[Message],string,int">
+<dt><pre><span class="Keyword">template</span> <a href="#streamForward.t%2Ctypedesc%5BMessage%5D%2Cstring%2Cint"><span class="Identifier">streamForward</span></a><span class="Other">(</span><span class="Identifier">selfTy</span><span class="Other">:</span> <span class="Identifier">typedesc</span><span class="Other">[</span><a href="sam_protocol.html#Message"><span class="Identifier">Message</span></a><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">nickname</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Keyword">var</span> <a href="sam_protocol.html#StreamForwardString"><span class="Identifier">StreamForwardString</span></a></pre></dt>
+<dd>
+
+<p>Returns distinct string with &quot;STREAM FORWARD ID=... DESTINATION=...&quot; as the start value</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L181"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L181" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -589,7 +1007,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-02-15 06:43:22 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-02-15 07:42:50 UTC</small>
       </div>
     </div>
   </div>
