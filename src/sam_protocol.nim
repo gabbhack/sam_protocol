@@ -33,11 +33,13 @@ type
   HelloString* = distinct string
   SessionCreateString* = distinct string
   StreamConnectString* = distinct string
+  StreamAcceptString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
     SessionCreateString |
-    StreamConnectString
+    StreamConnectString |
+    StreamAcceptString
 
 
 {.push inline.}
@@ -150,9 +152,16 @@ template streamConnect*(selfTy: typedesc[Message], nickname, destination: string
   ## Use `with*` methods to add more data and `build` to get the final string
   tempString[StreamConnectString]("STREAM CONNECT ID=" & nickname & " DESTINATION=" & destination)
 
-func withSilent*(str: var StreamConnectString, silent = false): var StreamConnectString =
+func withSilent*[T: StreamAcceptString | StreamConnectString](str: var T, silent = false): var T =
   ## Default false
   string(str).add fmt" SILENT={silent}"
   str
+
+# STREAM ACCEPT
+template streamAccept*(selfTy: typedesc[Message], nickname: string): var StreamAcceptString =
+  ## Returns distinct string with "STREAM ACCEPT ID=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[StreamAcceptString]("STREAM ACCEPT ID=" & nickname)
 
 {.pop.}

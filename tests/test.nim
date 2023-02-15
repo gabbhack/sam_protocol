@@ -9,6 +9,7 @@ block:
   checkTemp(HelloString)
   checkTemp(SessionCreateString)
   checkTemp(StreamConnectString)
+  checkTemp(StreamAcceptString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -37,3 +38,6 @@ doAssert Message.streamConnect("user", "xxx").string == "STREAM CONNECT ID=user 
 doAssert Message.streamConnect("user", "xxx").withSilent(true).string == "STREAM CONNECT ID=user DESTINATION=xxx SILENT=true"
 doAssert Message.streamConnect("user", "xxx").withFromPort(1234).string == "STREAM CONNECT ID=user DESTINATION=xxx FROM_PORT=1234"
 doAssert Message.streamConnect("user", "xxx").withToPort(1234).string == "STREAM CONNECT ID=user DESTINATION=xxx TO_PORT=1234"
+
+doAssert Message.streamAccept("user").string == "STREAM ACCEPT ID=user"
+doAssert Message.streamAccept("user").withSilent(true).string == "STREAM ACCEPT ID=user SILENT=true"
