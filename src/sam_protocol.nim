@@ -32,8 +32,12 @@ type
 
   HelloString* = distinct string
   SessionCreateString* = distinct string
+  StreamConnectString* = distinct string
 
-  BuilderStringTypes* = HelloString | SessionCreateString
+  BuilderStringTypes* =
+    HelloString |
+    SessionCreateString |
+    StreamConnectString
 
 
 {.push inline.}
@@ -97,12 +101,12 @@ func withHost*(str: var SessionCreateString, host: sink string): var SessionCrea
   string(str).add fmt" HOST={host}"
   str
 
-func withFromPort*(str: var SessionCreateString, fromPort = 0): var SessionCreateString =
+func withFromPort*[T: SessionCreateString | StreamConnectString](str: var T, fromPort = 0): var T =
   ## SAM 3.2 or higher only, default 0
   string(str).add fmt" FROM_PORT={fromPort}"
   str
 
-func withToPort*(str: var SessionCreateString, toPort = 0): var SessionCreateString =
+func withToPort*[T: SessionCreateString | StreamConnectString](str: var T, toPort = 0): var T=
   ## SAM 3.2 or higher only, default 0
   string(str).add fmt" TO_PORT={toPort}"
   str
@@ -135,6 +139,20 @@ func withInboundQuantity*(str: var SessionCreateString, inboundQuantity = 5): va
 func withOutboundQuantity*(str: var SessionCreateString, outboundQuantity = 5): var SessionCreateString =
   ## Number of outbound tunnels. 5 by default
   string(str).add fmt" outbound.quantity={outboundQuantity}"
+  str
+
+# STREAM CONNECT
+template streamConnect*(selfTy: typedesc[Message], nickname, destination: sink string): var StreamConnectString =
+  ## This establishes a new virtual connection from the local session whose ID is $nickname to the specified peer. 
+  ##
+  ## Returns distinct string with "STREAM CONNECT ID=... DESTINATION=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[StreamConnectString]("STREAM CONNECT ID=" & nickname & " DESTINATION=" & destination)
+
+func withSilent*(str: var StreamConnectString, silent = false): var StreamConnectString =
+  ## Default false
+  string(str).add fmt" SILENT={silent}"
   str
 
 {.pop.}
