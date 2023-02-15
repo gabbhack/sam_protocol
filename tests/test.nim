@@ -12,6 +12,7 @@ block:
   checkTemp(StreamAcceptString)
   checkTemp(StreamForwardString)
   checkTemp(SessionAddString)
+  checkTemp(SessionRemoveString)
 
 doAssert $StyleType.Stream == "STREAM"
 doAssert $StyleType.Datagram == "DATAGRAM"
@@ -60,3 +61,5 @@ doAssert Message.sessionAdd(Stream, "user").withProtocol(1234).string == "SESSIO
 doAssert Message.sessionAdd(Stream, "user").withListenPort(1234).string == "SESSION ADD STYLE=STREAM ID=user LISTEN_PORT=1234"
 doAssert Message.sessionAdd(Stream, "user").withListenProtocol(1234).string == "SESSION ADD STYLE=STREAM ID=user LISTEN_PROTOCOL=1234"
 doAssert Message.sessionAdd(Stream, "user").withHeader(true).string == "SESSION ADD STYLE=STREAM ID=user HEADER=true"
+
+doAssert Message.sessionRemove("user").string == "SESSION REMOVE ID=user"

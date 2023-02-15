@@ -38,6 +38,7 @@ type
   StreamAcceptString* = distinct string
   StreamForwardString* = distinct string
   SessionAddString* = distinct string
+  SessionRemoveString* = distinct string
 
   BuilderStringTypes* =
     HelloString |
@@ -45,7 +46,8 @@ type
     StreamConnectString |
     StreamAcceptString |
     StreamForwardString |
-    SessionAddString
+    SessionAddString |
+    SessionRemoveString
 
 
 {.push inline.}
@@ -196,5 +198,12 @@ func withListenPort*(str: var SessionAddString, listenPort = 0): var SessionAddS
 func withListenProtocol*(str: var SessionAddString, listenProtocol = 18): var SessionAddString =
   string(str).add fmt" LISTEN_PROTOCOL={listenProtocol}"
   str
+
+# SESSION REMOVE
+template sessionRemove*(selfTy: typedesc[Message], nickname: string): var SessionRemoveString =
+  ## Returns distinct string with "SESSION REMOVE ID=..." as the start value
+  ## 
+  ## Use `with*` methods to add more data and `build` to get the final string
+  tempString[SessionRemoveString]("SESSION REMOVE ID=" & nickname)
 
 {.pop.}
