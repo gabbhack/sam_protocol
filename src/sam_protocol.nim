@@ -80,7 +80,7 @@ func withPassword*(str: var HelloString, password: sink string): var HelloString
 
 
 # SESSION CREATE
-template sessionCreate*(selfTy: typedesc[Message], style: StyleType, nickname, destination: sink string): var SessionCreateString =
+template sessionCreate*(selfTy: typedesc[Message], style: StyleType, nickname, destination: string): var SessionCreateString =
   ## Returns distinct string with "SESSION CREATE STYLE=... ID=... DESTINATION=..." as the start value
   ## 
   ## Use `with*` methods to add more data and `build` to get the final string
@@ -142,7 +142,7 @@ func withOutboundQuantity*(str: var SessionCreateString, outboundQuantity = 5): 
   str
 
 # STREAM CONNECT
-template streamConnect*(selfTy: typedesc[Message], nickname, destination: sink string): var StreamConnectString =
+template streamConnect*(selfTy: typedesc[Message], nickname, destination: string): var StreamConnectString =
   ## This establishes a new virtual connection from the local session whose ID is $nickname to the specified peer. 
   ##
   ## Returns distinct string with "STREAM CONNECT ID=... DESTINATION=..." as the start value
