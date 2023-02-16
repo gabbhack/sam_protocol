@@ -61,6 +61,7 @@ DestGenerateString	sam_protocol.html#DestGenerateString	sam_protocol: DestGenera
 PingString	sam_protocol.html#PingString	sam_protocol: PingString	
 PongString	sam_protocol.html#PongString	sam_protocol: PongString	
 BuilderStringTypes	sam_protocol.html#BuilderStringTypes	sam_protocol: BuilderStringTypes	
+TRANSIENT_DESTINATION	sam_protocol.html#TRANSIENT_DESTINATION	sam_protocol: TRANSIENT_DESTINATION	
 build	sam_protocol.html#build,BuilderStringTypes	sam_protocol: build(str: var BuilderStringTypes): lent string	
 withPort	sam_protocol.html#withPort,T,int	sam_protocol: withPort[T: SessionCreateString | StreamForwardString | SessionAddString](\n    str: var T; port: int): var T	
 withHost	sam_protocol.html#withHost,T,sinkstring	sam_protocol: withHost[T: SessionCreateString | StreamForwardString | SessionAddString](\n    str: var T; host: sink string): var T	
