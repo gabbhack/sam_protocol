@@ -416,7 +416,7 @@ template isKeyEqualTo(pattern: static[string]): bool {.dirty.} =
 template getValueString(): string {.dirty.} =
   text[value.start..value.finish]
 
-func fromString*(selfTy: typedesc[Answer], text: sink string): Answer {.raises:[ParseError, ValueError].} =
+func fromString*(selfTy: typedesc[Answer], text: sink string): Answer {.raises:[ParseError, ValueError, UnpackDefect].} =
   const
     HELLO_REPLY = "HELLO REPLY "
 
