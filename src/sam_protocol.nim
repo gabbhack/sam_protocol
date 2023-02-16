@@ -416,11 +416,6 @@ template isKeyEqualTo(pattern: static[string]): bool {.dirty.} =
 template getValueString(): string {.dirty.} =
   text[value.start..value.finish]
 
-when (NimMajor, NimMinor) <= (1, 2):
-  {.push raises:[ParseError, ValueError, DefectError].}
-else:
-  {.push raises:[ParseError, ValueError].}
-
 func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
   const
     HELLO_REPLY = "HELLO REPLY "
@@ -450,5 +445,4 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
   else:
     raise newException(ParseError, "Unknown command: " & text)
 
-{.pop.}
 {.pop.}
