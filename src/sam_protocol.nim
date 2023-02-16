@@ -413,35 +413,76 @@ iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int,
 template isKeyEqualTo(pattern: static[string]): bool {.dirty.} =
   text.toOpenArray(key.start, key.finish) == pattern
 
-template getValueString(): string {.dirty.} =
+template getValue(): string {.dirty.} =
   text[value.start..value.finish]
+
+template getValueString(): string {.dirty.} =
+  text.captureBetween('"',  '"', value.start)
+
+template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
+  bind
+    isSome,
+    get,
+    ParseError
+
+  if isSome(value):
+    get(value)
+  else:
+    raise newException(typedesc[ParseError], "Expected key `" & name & "` in command `" & text & '`')
 
 func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
   const
     HELLO_REPLY = "HELLO REPLY "
+    SESSION_STATUS = "SESSION STATUS "
 
   if text.skip(HELLO_REPLY) != 0:
     var
-      resultType: ResultType
+      resultType: Option[ResultType]
       errorMessage: Option[string]
       version: Option[string]
 
     for key, value in keyValueSplit(text, '=', HELLO_REPLY.len):
       if isKeyEqualTo("RESULT"):
-        resultType = parseEnum[ResultType](getValueString())
+        resultType = some parseEnum[ResultType](getValue())
       elif isKeyEqualTo("MESSAGE"):
         errorMessage = some getValueString()
       elif isKeyEqualTo("VERSION"):
-        version = some getValueString()
+        version = some getValue()
+
+    let temp = resultType.getOrRaise("RESULT")
 
     return
-      case resultType
+      case temp
       of Ok:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: Ok, version: version.get()))
+        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: Ok, version: version.getOrRaise("VERSION")))
       of I2PError:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: I2PError, message: errorMessage.get()))
+        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: I2PError, message: errorMessage.getOrRaise("MESSAGE")))
       else:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: resultType))
+        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: temp))
+  elif text.skip(SESSION_STATUS) != 0:
+    var
+      resultType: Option[ResultType]
+      errorMessage: Option[string]
+      destination: Option[string]
+
+    for key, value in keyValueSplit(text, '=', SESSION_STATUS.len):
+      if isKeyEqualTo("RESULT"):
+        resultType = some parseEnum[ResultType](getValue())
+      elif isKeyEqualTo("MESSAGE"):
+        errorMessage = some getValueString()
+      elif isKeyEqualTo("DESTINATION"):
+        destination = some getValue()
+
+    let temp = resultType.getOrRaise("RESULT")
+
+    return
+      case temp
+      of Ok:
+        Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: Ok, destination: destination.getOrRaise("DESTINATION")))
+      of I2PError:
+        Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: I2PError, message: errorMessage.getOrRaise("MESSAGE")))
+      else:
+        Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: temp))
   else:
     raise newException(ParseError, "Unknown command: " & text)
 

@@ -90,7 +90,35 @@ block:
   doAssert answer.hello.kind == Noversion
 
 block:
-  let answer = Answer.fromString("HELLO REPLY RESULT=I2P_ERROR MESSAGE=BAD")
+  let answer = Answer.fromString("HELLO REPLY RESULT=I2P_ERROR MESSAGE=\"BAD\"")
   doAssert answer.kind == HelloReply
   doAssert answer.hello.kind == I2PError
   doAssert answer.hello.message == "BAD"
+
+block:
+  let answer = Answer.fromString("SESSION STATUS RESULT=OK DESTINATION=KEK")
+  doAssert answer.kind == SessionStatus
+  doAssert answer.session.kind == Ok
+  doAssert answer.session.destination == "KEK"
+
+block:
+  let answer = Answer.fromString("SESSION STATUS RESULT=DUPLICATED_ID")
+  doAssert answer.kind == SessionStatus
+  doAssert answer.session.kind == DuplicatedId
+
+block:
+  let answer = Answer.fromString("SESSION STATUS RESULT=DUPLICATED_DEST")
+  doAssert answer.kind == SessionStatus
+  doAssert answer.session.kind == DuplicatedDest
+
+block:
+  let answer = Answer.fromString("SESSION STATUS RESULT=INVALID_KEY")
+  doAssert answer.kind == SessionStatus
+  doAssert answer.session.kind == InvalidKey
+
+block:
+  let answer = Answer.fromString("SESSION STATUS RESULT=I2P_ERROR MESSAGE=\"BAD\"")
+  doAssert answer.kind == SessionStatus
+  doAssert answer.session.kind == I2PError
+  doAssert answer.session.message == "BAD"
+
