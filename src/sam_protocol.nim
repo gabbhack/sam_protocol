@@ -182,6 +182,65 @@ type
 
 const TRANSIENT_DESTINATION* = "TRANSIENT"
 
+
+# Utils
+template isKeyEqualTo(pattern: static[string]): bool {.dirty.} =
+  text.toOpenArray(key.start, key.finish) == pattern
+
+template getValue(): string {.dirty.} =
+  text[value.start..value.finish]
+
+template getValueString(): string {.dirty.} =
+  text.captureBetween('"',  '"', value.start)
+
+template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
+  bind
+    isSome,
+    get,
+    ParseError
+
+  if isSome(value):
+    get(value)
+  else:
+    raise newException(typedesc[ParseError], "Expected key `" & name & "` in command `" & text & '`')
+
+# Adopted from strutils
+# https://github.com/nim-lang/Nim/blob/7fa782e3a085ff9ec79273164d7305210a738b90/lib/pure/strutils.nim#L363
+template stringHasSep(s: string, index: int, sep: char): bool =
+  s[index] == sep
+
+template isWhitespace(s: string, index: int): bool =
+  s[index] in Whitespace
+
+iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int, finish: int], tuple[start: int, finish: int]) =
+  ## Common code for split procs
+  var last = startFrom
+  const sepLen = 1
+
+  var
+    keyStartIndex = -1
+    keyEndIndex = -1
+    valueStartIndex = -1
+    valueEndIndex = -1
+
+  while last <= len(s):
+    var first = last
+    while last < len(s) and not stringHasSep(s, last, sep) and not isWhitespace(s, last):
+      inc(last)
+
+    if keyStartIndex == -1 and keyEndIndex == -1:
+      keyStartIndex = first
+      keyEndIndex = last-1
+    elif valueStartIndex == -1 and valueEndIndex == -1:
+      valueStartIndex = first
+      valueEndIndex = last-1
+      yield ((keyStartIndex, keyEndIndex), (valueStartIndex, valueEndIndex))
+      keyStartIndex = -1
+      keyEndIndex = -1
+      valueStartIndex = -1
+      valueEndIndex = -1
+    inc(last, sepLen)
+
 {.push inline.}
 
 template tempString[T](startValue: string): var T =
@@ -189,7 +248,7 @@ template tempString[T](startValue: string): var T =
   T(temp)
 
 func build*(str: var BuilderStringTypes): lent string =
-  ## Test foo bar kek
+  ## Add '\n' and return as `string`
   string(str).add '\n'
   string(str)
 
@@ -374,64 +433,8 @@ func withText*[T: PingString | PongString](self: var T, text: sink string): var 
 
 
 # Parsing
-# Adopted from strutils
-# https://github.com/nim-lang/Nim/blob/7fa782e3a085ff9ec79273164d7305210a738b90/lib/pure/strutils.nim#L363
-template stringHasSep(s: string, index: int, sep: char): bool =
-  s[index] == sep
-
-template isWhitespace(s: string, index: int): bool =
-  s[index] in Whitespace
-
-iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int, finish: int], tuple[start: int, finish: int]) =
-  ## Common code for split procs
-  var last = startFrom
-  const sepLen = 1
-
-  var
-    keyStartIndex = -1
-    keyEndIndex = -1
-    valueStartIndex = -1
-    valueEndIndex = -1
-
-  while last <= len(s):
-    var first = last
-    while last < len(s) and not stringHasSep(s, last, sep) and not isWhitespace(s, last):
-      inc(last)
-
-    if keyStartIndex == -1 and keyEndIndex == -1:
-      keyStartIndex = first
-      keyEndIndex = last-1
-    elif valueStartIndex == -1 and valueEndIndex == -1:
-      valueStartIndex = first
-      valueEndIndex = last-1
-      yield ((keyStartIndex, keyEndIndex), (valueStartIndex, valueEndIndex))
-      keyStartIndex = -1
-      keyEndIndex = -1
-      valueStartIndex = -1
-      valueEndIndex = -1
-    inc(last, sepLen)
-
-template isKeyEqualTo(pattern: static[string]): bool {.dirty.} =
-  text.toOpenArray(key.start, key.finish) == pattern
-
-template getValue(): string {.dirty.} =
-  text[value.start..value.finish]
-
-template getValueString(): string {.dirty.} =
-  text.captureBetween('"',  '"', value.start)
-
-template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
-  bind
-    isSome,
-    get,
-    ParseError
-
-  if isSome(value):
-    get(value)
-  else:
-    raise newException(typedesc[ParseError], "Expected key `" & name & "` in command `" & text & '`')
-
 func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
+  ## Parse response from I2P
   const
     HELLO_REPLY = "HELLO REPLY "
     SESSION_STATUS = "SESSION STATUS "
