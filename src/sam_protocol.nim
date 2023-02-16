@@ -180,6 +180,7 @@ type
     PingString |
     PongString
 
+const TRANSIENT_DESTINATION* = "TRANSIENT"
 
 {.push inline.}
 
