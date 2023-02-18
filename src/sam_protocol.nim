@@ -92,7 +92,7 @@ type
 
   StreamAnswer* = object
     kind*: ResultType
-  
+
   NamingAnswer* = object
     name*: string
     case kind*: ResultType
@@ -102,14 +102,14 @@ type
       message*: string
     else:
       discard
-  
+
   DestAnswer* = object
     pub*: string
     priv*: string
 
   PingAnswer* = object
     text: Option[string]
-  
+
   PongAnswer* = object
     text: Option[string]
 
@@ -118,7 +118,7 @@ type
     size*: int
     fromPort*: Option[int]
     toPort*: Option[int]
-  
+
   RawAnswer* = object
     size*: int
     fromPort*: Option[int]
@@ -459,6 +459,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     SESSION_STATUS = "SESSION STATUS "
     DATAGRAM_RECEIVED = "DATAGRAM RECEIVED "
     RAW_RECEIVED = "RAW RECEIVED "
+    NAMING_REPLY = "NAMING REPLY "
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -590,6 +591,56 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         protocol: protocol
       )
     )
+
+  elif text.skip(NAMING_REPLY) != 0:
+    var
+      resultType: Option[ResultType]
+      name: Option[string]
+      valueKey: Option[string]
+      errorMessage: Option[string]
+
+    for key, value in keyValueSplit(text, '=', NAMING_REPLY.len):
+      if isKeyEqualTo("RESULT"):
+        resultType = some parseEnum[ResultType](getValue())
+      elif isKeyEqualTo("NAME"):
+        name = some getValue()
+      elif isKeyEqualTo("VALUE"):
+        valueKey = some getValue()
+      elif isKeyEqualTo("MESSAGE"):
+        errorMessage = some getValueString()
+
+    let
+      temp = resultType.getOrRaise("RESULT")
+      nameValue = name.getOrRaise("NAME")
+
+    return 
+      case temp
+      of Ok:
+        Answer(
+          kind: AnswerType.NamingReply,
+          naming: NamingAnswer(
+            kind: Ok,
+            name: nameValue,
+            value: valueKey.getOrRaise("VALUE")
+          )
+        )
+      of I2PError:
+        Answer(
+          kind: AnswerType.NamingReply,
+          naming: NamingAnswer(
+            kind: I2PError,
+            name: nameValue,
+            message: errorMessage.getOrRaise("MESSAGE")
+          )
+        )
+      else:
+        Answer(
+          kind: AnswerType.NamingReply,
+          naming: NamingAnswer(
+            kind: temp,
+            name: nameValue
+          )
+        )
 
   else:
     raise newException(ParseError, "Unknown command: " & text)

@@ -165,3 +165,22 @@ block:
   doAssert answer.raw.fromPort == some 123
   doAssert answer.raw.toPort == some 123
   doAssert answer.raw.protocol == some 123
+
+block:
+  let answer = Answer.fromString("NAMING REPLY RESULT=INVALID_KEY NAME=identiguy1.i2p")
+  doAssert answer.kind == NamingReply
+  doAssert answer.naming.kind == InvalidKey
+  doAssert answer.naming.name == "identiguy1.i2p"
+
+block:
+  let answer = Answer.fromString("NAMING REPLY RESULT=OK NAME=identiguy.i2p VALUE=XXX")
+  doAssert answer.kind == NamingReply
+  doAssert answer.naming.kind == Ok
+  doAssert answer.naming.name == "identiguy.i2p"
+  doAssert answer.naming.value == "XXX"
+
+block:
+  let answer = Answer.fromString("NAMING REPLY RESULT=KEY_NOT_FOUND NAME=identiguy.i2p")
+  doAssert answer.kind == NamingReply
+  doAssert answer.naming.kind == KeyNotFound
+  doAssert answer.naming.name == "identiguy.i2p"
