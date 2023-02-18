@@ -9,33 +9,37 @@ proc main() =
   let socket = newSocket()
   socket.connect("127.0.0.1", Port(7656))
   socket.send(
-    Message.hello.build()
+    Message.hello
+    .withMinVersion("3.1")
+    .withMaxVersion("3.1")
+    .build()
   )
 
-  let helloAnswer = Answer.fromString(socket.recvLine())
+  echo "Handshake..."
 
-  case helloAnswer:
-  of HelloReply(hello: @hello):
-    case hello:
-    of Ok(version: @version):
-      echo "SAM version: ", version
+  let helloAnswer = Answer.fromString(socket.recvLine())
+  doAssert helloAnswer.hello.kind == Ok
+
+  echo "Dest generating..."
+  socket.send(Message.destGenerate.build())
+
+  let destAnswer = Answer.fromString(socket.recvLine())
+
+  echo "Session creating..."
 
   socket.send(
     Message.sessionCreate(
       Stream,
       "test",
-      TRANSIENT_DESTINATION
+      destAnswer.dest.priv
     )
     .build()
   )
 
   let sessionCreateAnswer = Answer.fromString(socket.recvLine())
+  doAssert sessionCreateAnswer.session.kind == Ok
 
-  case sessionCreateAnswer:
-  of SessionStatus(session: @session):
-    case session:
-    of Ok(destination: @destination):
-      echo "Destination: " & destination
+  echo "Done"
 
 when isMainModule:
   main()

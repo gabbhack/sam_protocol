@@ -184,3 +184,9 @@ block:
   doAssert answer.kind == NamingReply
   doAssert answer.naming.kind == KeyNotFound
   doAssert answer.naming.name == "identiguy.i2p"
+
+block:
+  let answer = Answer.fromString("DEST REPLY PUB=XXX PRIV=YYY")
+  doAssert answer.kind == DestReply
+  doAssert answer.dest.pub == "XXX"
+  doAssert answer.dest.priv == "YYY"

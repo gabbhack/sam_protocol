@@ -460,6 +460,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     DATAGRAM_RECEIVED = "DATAGRAM RECEIVED "
     RAW_RECEIVED = "RAW RECEIVED "
     NAMING_REPLY = "NAMING REPLY "
+    DEST_REPLY = "DEST REPLY "
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -641,6 +642,25 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
             name: nameValue
           )
         )
+
+  elif text.skip(DEST_REPLY) != 0:
+    var
+      pub: Option[string]
+      priv: Option[string]
+
+    for key, value in keyValueSplit(text, '=', DEST_REPLY.len):
+      if isKeyEqualTo("PUB"):
+        pub = some getValue()
+      elif isKeyEqualTo("PRIV"):
+        priv = some getValue()
+
+    return Answer(
+      kind: AnswerType.DestReply,
+      dest: DestAnswer(
+        pub: pub.getOrRaise("PUB"),
+        priv: priv.getOrRaise("PRIV")
+      )
+    )
 
   else:
     raise newException(ParseError, "Unknown command: " & text)
