@@ -1,3 +1,7 @@
+import std/[
+  options
+]
+
 import sam_protocol
 
 
@@ -122,3 +126,18 @@ block:
   doAssert answer.session.kind == I2PError
   doAssert answer.session.message == "BAD"
 
+block:
+  let answer = Answer.fromString("DATAGRAM RECEIVED DESTINATION=xxx SIZE=100")
+  doAssert answer.kind == DatagramReceived
+  doAssert answer.datagram.destination == "xxx"
+  doAssert answer.datagram.size == 100
+  doAssert answer.datagram.fromPort == none int
+  doAssert answer.datagram.toPort == none int
+
+block:
+  let answer = Answer.fromString("DATAGRAM RECEIVED DESTINATION=xxx SIZE=100 FROM_PORT=123 TO_PORT=123")
+  doAssert answer.kind == DatagramReceived
+  doAssert answer.datagram.destination == "xxx"
+  doAssert answer.datagram.size == 100
+  doAssert answer.datagram.fromPort == some 123
+  doAssert answer.datagram.toPort == some 123

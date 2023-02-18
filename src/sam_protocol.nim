@@ -118,7 +118,6 @@ type
     size*: int
     fromPort*: Option[int]
     toPort*: Option[int]
-    data*: seq[byte]
   
   RawAnswer* = object
     size*: int
@@ -195,7 +194,9 @@ template getValueString(): string {.dirty.} =
 
 template getValueInt(): int {.dirty.} =
   var temp: int
-  text.parseInt(temp, value.start)
+  if text.parseInt(temp, value.start) == 0:
+    raise newException(ParseError, "Expected integer at " & $value.start & " position in `" & text & '`')
+  temp
 
 template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
   bind
@@ -206,7 +207,7 @@ template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
   if isSome(value):
     get(value)
   else:
-    raise newException(typedesc[ParseError], "Expected key `" & name & "` in command `" & text & '`')
+    raise newException(typedesc[ParseError], "Expected `" & name & "` in`" & text & '`')
 
 # Adopted from strutils
 # https://github.com/nim-lang/Nim/blob/7fa782e3a085ff9ec79273164d7305210a738b90/lib/pure/strutils.nim#L363
@@ -246,6 +247,20 @@ iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int,
     inc(last, sepLen)
 
 {.push inline.}
+
+func toBytes*(s: openArray[char]): seq[byte] =
+  # Copyright (c) 2018-2022 Status Research & Development GmbH
+  # Licensed and distributed under either of
+  #   * MIT license (license terms in the root directory or at http://opensource.org/licenses/MIT).
+  #   * Apache v2 license (license terms in the root directory or at http://www.apache.org/licenses/LICENSE-2.0).
+  # at your option. This file may not be copied, modified, or distributed except according to those terms.
+  when nimvm:
+    var r = newSeq[byte](s.len)
+    for i, c in s:
+      r[i] = cast[byte](c)
+    r
+  else:
+    @(s.toOpenArrayByte(0, s.high))
 
 template tempString[T](startValue: string): var T =
   var temp = startValue
@@ -463,11 +478,27 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     return
       case temp
       of Ok:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: Ok, version: version.getOrRaise("VERSION")))
+        Answer(
+          kind: AnswerType.HelloReply,
+          hello: HelloAnswer(
+            kind: Ok,
+            version: version.getOrRaise("VERSION")
+          )
+        )
       of I2PError:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: I2PError, message: errorMessage.getOrRaise("MESSAGE")))
+        Answer(
+          kind: AnswerType.HelloReply,
+          hello: HelloAnswer(
+            kind: I2PError,
+            message: errorMessage.getOrRaise("MESSAGE")
+          )
+        )
       else:
-        Answer(kind: AnswerType.HelloReply, hello: HelloAnswer(kind: temp))
+        Answer(
+          kind: AnswerType.HelloReply,
+          hello: HelloAnswer(kind: temp)
+        )
+
   elif text.skip(SESSION_STATUS) != 0:
     var
       resultType: Option[ResultType]
@@ -487,19 +518,30 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     return
       case temp
       of Ok:
-        Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: Ok, destination: destination.getOrRaise("DESTINATION")))
+        Answer(
+          kind: AnswerType.SessionStatus,
+          session: SessionAnswer(
+            kind: Ok,
+            destination: destination.getOrRaise("DESTINATION")
+          )
+        )
       of I2PError:
-        Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: I2PError, message: errorMessage.getOrRaise("MESSAGE")))
+        Answer(
+          kind: AnswerType.SessionStatus,
+          session: SessionAnswer(
+            kind: I2PError,
+            message: errorMessage.getOrRaise("MESSAGE")
+          )
+        )
       else:
         Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: temp))
+
   elif text.skip(DATAGRAM_RECEIVED) != 0:
     var
       destination: Option[string]
       size: Option[int]
       fromPort: Option[int]
       toPort: Option[int]
-      data: Option[seq[byte]]
-      lastIndex = -1
 
     for key, value in keyValueSplit(text, '=', DATAGRAM_RECEIVED.len):
       if isKeyEqualTo("DESTINATION"):
@@ -510,10 +552,16 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         fromPort = some getValueInt()
       elif isKeyEqualTo("TO_PORT"):
         toPort = some getValueInt()
-      lastIndex = value.finish
 
-    if lastIndex != -1:
-      discard
+    return Answer(
+      kind: AnswerType.DatagramReceived,
+      datagram: DatagramAnswer(
+        destination: destination.getOrRaise("DESTINATION"),
+        size: size.getOrRaise("SIZE"),
+        fromPort: fromPort,
+        toPort: toPort
+      )
+    )
 
   else:
     raise newException(ParseError, "Unknown command: " & text)
