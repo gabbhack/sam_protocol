@@ -108,10 +108,10 @@ type
     priv*: string
 
   PingAnswer* = object
-    text: Option[string]
+    text*: Option[string]
 
   PongAnswer* = object
-    text: Option[string]
+    text*: Option[string]
 
   DatagramAnswer* = object
     destination*: string
@@ -461,6 +461,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     RAW_RECEIVED = "RAW RECEIVED "
     NAMING_REPLY = "NAMING REPLY "
     DEST_REPLY = "DEST REPLY "
+    PONG = "PONG"
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -661,6 +662,18 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         priv: priv.getOrRaise("PRIV")
       )
     )
+
+  elif text.skip(PONG) != 0:
+    if text.len == PONG.len:
+      return Answer(
+        kind: AnswerType.Pong,
+        pong: PongAnswer()
+      )
+    else:
+      return Answer(
+        kind: AnswerType.Pong,
+        pong: PongAnswer(text: some text[PONG.len+1..^1])
+      )
 
   else:
     raise newException(ParseError, "Unknown command: " & text)

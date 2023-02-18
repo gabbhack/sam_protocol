@@ -190,3 +190,13 @@ block:
   doAssert answer.kind == DestReply
   doAssert answer.dest.pub == "XXX"
   doAssert answer.dest.priv == "YYY"
+
+block:
+  let answer = Answer.fromString("PONG")
+  doAssert answer.kind == Pong
+  doAssert answer.pong.text == none string
+
+block:
+  let answer = Answer.fromString("PONG TEST")
+  doAssert answer.kind == Pong
+  doAssert answer.pong.text == some "TEST"
