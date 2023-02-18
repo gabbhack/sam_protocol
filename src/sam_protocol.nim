@@ -193,6 +193,10 @@ template getValue(): string {.dirty.} =
 template getValueString(): string {.dirty.} =
   text.captureBetween('"',  '"', value.start)
 
+template getValueInt(): int {.dirty.} =
+  var temp: int
+  text.parseInt(temp, value.start)
+
 template getOrRaise[T](value: Option[T], name: string): T{.dirty.} =
   bind
     isSome,
@@ -438,6 +442,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
   const
     HELLO_REPLY = "HELLO REPLY "
     SESSION_STATUS = "SESSION STATUS "
+    DATAGRAM_RECEIVED = "DATAGRAM RECEIVED "
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -487,6 +492,29 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: I2PError, message: errorMessage.getOrRaise("MESSAGE")))
       else:
         Answer(kind: AnswerType.SessionStatus, session: SessionAnswer(kind: temp))
+  elif text.skip(DATAGRAM_RECEIVED) != 0:
+    var
+      destination: Option[string]
+      size: Option[int]
+      fromPort: Option[int]
+      toPort: Option[int]
+      data: Option[seq[byte]]
+      lastIndex = -1
+
+    for key, value in keyValueSplit(text, '=', DATAGRAM_RECEIVED.len):
+      if isKeyEqualTo("DESTINATION"):
+        destination = some getValue()
+      elif isKeyEqualTo("SIZE"):
+        size = some getValueInt()
+      elif isKeyEqualTo("FROM_PORT"):
+        fromPort = some getValueInt()
+      elif isKeyEqualTo("TO_PORT"):
+        toPort = some getValueInt()
+      lastIndex = value.finish
+
+    if lastIndex != -1:
+      discard
+
   else:
     raise newException(ParseError, "Unknown command: " & text)
 
