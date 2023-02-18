@@ -458,6 +458,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     HELLO_REPLY = "HELLO REPLY "
     SESSION_STATUS = "SESSION STATUS "
     DATAGRAM_RECEIVED = "DATAGRAM RECEIVED "
+    RAW_RECEIVED = "RAW RECEIVED "
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -560,6 +561,33 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         size: size.getOrRaise("SIZE"),
         fromPort: fromPort,
         toPort: toPort
+      )
+    )
+
+  elif text.skip(RAW_RECEIVED) != 0:
+    var
+      size: Option[int]
+      fromPort: Option[int]
+      toPort: Option[int]
+      protocol: Option[int]
+
+    for key, value in keyValueSplit(text, '=', RAW_RECEIVED.len):
+      if isKeyEqualTo("SIZE"):
+        size = some getValueInt()
+      elif isKeyEqualTo("FROM_PORT"):
+        fromPort = some getValueInt()
+      elif isKeyEqualTo("TO_PORT"):
+        toPort = some getValueInt()
+      elif isKeyEqualTo("PROTOCOL"):
+        protocol = some getValueInt()
+
+    return Answer(
+      kind: AnswerType.RawReceived,
+      raw: RawAnswer(
+        size: size.getOrRaise("SIZE"),
+        fromPort: fromPort,
+        toPort: toPort,
+        protocol: protocol
       )
     )
 

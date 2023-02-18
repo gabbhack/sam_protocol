@@ -141,3 +141,27 @@ block:
   doAssert answer.datagram.size == 100
   doAssert answer.datagram.fromPort == some 123
   doAssert answer.datagram.toPort == some 123
+
+block:
+  let answer = Answer.fromString("DATAGRAM RECEIVED DESTINATION=xxx SIZE=100")
+  doAssert answer.kind == DatagramReceived
+  doAssert answer.datagram.destination == "xxx"
+  doAssert answer.datagram.size == 100
+  doAssert answer.datagram.fromPort == none int
+  doAssert answer.datagram.toPort == none int
+
+block:
+  let answer = Answer.fromString("RAW RECEIVED SIZE=100")
+  doAssert answer.kind == RawReceived
+  doAssert answer.raw.size == 100
+  doAssert answer.raw.fromPort == none int
+  doAssert answer.raw.toPort == none int
+  doAssert answer.raw.protocol == none int
+
+block:
+  let answer = Answer.fromString("RAW RECEIVED SIZE=100 FROM_PORT=123 TO_PORT=123 PROTOCOL=123")
+  doAssert answer.kind == RawReceived
+  doAssert answer.raw.size == 100
+  doAssert answer.raw.fromPort == some 123
+  doAssert answer.raw.toPort == some 123
+  doAssert answer.raw.protocol == some 123
