@@ -462,6 +462,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     NAMING_REPLY = "NAMING REPLY "
     DEST_REPLY = "DEST REPLY "
     PONG = "PONG"
+    PING = "PING"
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -673,6 +674,18 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
       return Answer(
         kind: AnswerType.Pong,
         pong: PongAnswer(text: some text[PONG.len+1..^1])
+      )
+
+  elif text.skip(PING) != 0:
+    if text.len == PING.len:
+      return Answer(
+        kind: AnswerType.Ping,
+        ping: PingAnswer()
+      )
+    else:
+      return Answer(
+        kind: AnswerType.Ping,
+        ping: PingAnswer(text: some text[PING.len+1..^1])
       )
 
   else:

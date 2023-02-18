@@ -200,3 +200,13 @@ block:
   let answer = Answer.fromString("PONG TEST")
   doAssert answer.kind == Pong
   doAssert answer.pong.text == some "TEST"
+
+block:
+  let answer = Answer.fromString("PING")
+  doAssert answer.kind == Ping
+  doAssert answer.ping.text == none string
+
+block:
+  let answer = Answer.fromString("PING TEST")
+  doAssert answer.kind == Ping
+  doAssert answer.ping.text == some "TEST"
