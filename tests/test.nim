@@ -186,6 +186,13 @@ block:
   doAssert answer.naming.name == "identiguy.i2p"
 
 block:
+  let answer = Answer.fromString("NAMING REPLY RESULT=I2P_ERROR MESSAGE=\"BAD\" NAME=identiguy.i2p")
+  doAssert answer.kind == NamingReply
+  doAssert answer.naming.kind == I2PError
+  doAssert answer.naming.message == "BAD"
+  doAssert answer.naming.name == "identiguy.i2p"
+
+block:
   let answer = Answer.fromString("DEST REPLY PUB=XXX PRIV=YYY")
   doAssert answer.kind == DestReply
   doAssert answer.dest.pub == "XXX"
@@ -210,3 +217,14 @@ block:
   let answer = Answer.fromString("PING TEST")
   doAssert answer.kind == Ping
   doAssert answer.ping.text == some "TEST"
+
+block:
+  let answer = Answer.fromString("STREAM STATUS RESULT=OK")
+  doAssert answer.kind == StreamStatus
+  doAssert answer.stream.kind == Ok
+
+block:
+  let answer = Answer.fromString("STREAM STATUS RESULT=I2P_ERROR MESSAGE=\"BAD\"")
+  doAssert answer.kind == StreamStatus
+  doAssert answer.stream.kind == I2PError
+  doAssert answer.stream.message == "BAD"

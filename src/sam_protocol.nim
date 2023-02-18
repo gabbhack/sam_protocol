@@ -91,7 +91,11 @@ type
       discard
 
   StreamAnswer* = object
-    kind*: ResultType
+    case kind*: ResultType
+    of I2PError:
+      message*: string
+    else:
+      discard
 
   NamingAnswer* = object
     name*: string
@@ -463,6 +467,7 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
     DEST_REPLY = "DEST REPLY "
     PONG = "PONG"
     PING = "PING"
+    STREAM_STATUS = "STREAM STATUS "
 
   if text.skip(HELLO_REPLY) != 0:
     var
@@ -687,6 +692,37 @@ func fromString*(selfTy: typedesc[Answer], text: sink string): Answer =
         kind: AnswerType.Ping,
         ping: PingAnswer(text: some text[PING.len+1..^1])
       )
+
+  elif text.skip(STREAM_STATUS) != 0:
+    var
+      resultType: Option[ResultType]
+      errorMessage: Option[string]
+
+    for key, value in keyValueSplit(text, '=', STREAM_STATUS.len):
+      if isKeyEqualTo("RESULT"):
+        resultType = some parseEnum[ResultType](getValue())
+      elif isKeyEqualTo("MESSAGE"):
+        errorMessage = some getValueString()
+    
+    let temp = resultType.getOrRaise("RESULT")
+
+    return
+      case temp
+      of I2PError:
+        Answer(
+          kind: AnswerType.StreamStatus,
+          stream: StreamAnswer(
+            kind: I2PError,
+            message: errorMessage.getOrRaise("MESSAGE")
+          )
+        )
+      else:
+        Answer(
+          kind: AnswerType.StreamStatus,
+          stream: StreamAnswer(
+            kind: temp
+          )
+        )
 
   else:
     raise newException(ParseError, "Unknown command: " & text)
