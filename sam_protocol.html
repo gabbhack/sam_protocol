@@ -191,12 +191,12 @@ window.addEventListener('DOMContentLoaded', main);
     title="ParseError = object of CatchableError">ParseError</a></li>
   <li><a class="reference" href="#PingAnswer"
     title="PingAnswer = object
-  text: Option[string]">PingAnswer</a></li>
+  text*: Option[string]">PingAnswer</a></li>
   <li><a class="reference" href="#PingString"
     title="PingString = distinct string">PingString</a></li>
   <li><a class="reference" href="#PongAnswer"
     title="PongAnswer = object
-  text: Option[string]">PongAnswer</a></li>
+  text*: Option[string]">PongAnswer</a></li>
   <li><a class="reference" href="#PongString"
     title="PongString = distinct string">PongString</a></li>
   <li><a class="reference" href="#RawAnswer"
@@ -252,7 +252,12 @@ window.addEventListener('DOMContentLoaded', main);
     title="StreamAcceptString = distinct string">StreamAcceptString</a></li>
   <li><a class="reference" href="#StreamAnswer"
     title="StreamAnswer = object
-  kind*: ResultType">StreamAnswer</a></li>
+  case kind*: ResultType
+  of I2PError:
+      message*: string
+
+  else:
+      nil">StreamAnswer</a></li>
   <li><a class="reference" href="#StreamConnectString"
     title="StreamConnectString = distinct string">StreamConnectString</a></li>
   <li><a class="reference" href="#StreamForwardString"
@@ -521,9 +526,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L129"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L133"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L129" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L133" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -557,9 +562,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L169"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L173"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L169" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L173" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -574,9 +579,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L116"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L120"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L116" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L120" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -589,9 +594,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L106"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L110"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L106" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L110" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -601,9 +606,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L164"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L168"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L164" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L168" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -636,9 +641,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L152"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L156"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L152" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L156" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -648,9 +653,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L150"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L154"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L150" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L154" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -672,9 +677,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L96"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L100"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L96" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L100" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -684,9 +689,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L162"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L166"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L162" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L166" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -704,15 +709,15 @@ class="link-seesrc" target="_blank">Source</a>
 </div>
 <div id="PingAnswer">
 <dt><pre><a href="sam_protocol.html#PingAnswer"><span class="Identifier">PingAnswer</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">text</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
 </pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L110"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L114"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L110" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L114" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -722,23 +727,23 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L166"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L170"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L166" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L170" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
 <div id="PongAnswer">
 <dt><pre><a href="sam_protocol.html#PongAnswer"><span class="Identifier">PongAnswer</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">text</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
+  <span class="Identifier">text</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">Option</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span>
 </pre></dt>
 <dd>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L113"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L117"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L113" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L117" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -748,9 +753,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L167"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L171"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L167" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L171" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -766,9 +771,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L122"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L126"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L122" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L126" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -801,9 +806,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L155"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L159"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L155" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L159" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -836,9 +841,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L154"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L158"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L154" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L158" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -848,9 +853,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L156"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L160"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L156" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L160" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -882,16 +887,22 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L159"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L163"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L159" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L163" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
 <div id="StreamAnswer">
 <dt><pre><a href="sam_protocol.html#StreamAnswer"><span class="Identifier">StreamAnswer</span></a> <span class="Other">=</span> <span class="Keyword">object</span>
-  <span class="Identifier">kind</span><span class="Operator">*</span><span class="Other">:</span> <a href="sam_protocol.html#ResultType"><span class="Identifier">ResultType</span></a>
-</pre></dt>
+  <span class="Keyword">case</span> <span class="Identifier">kind</span><span class="Operator">*</span><span class="Other">:</span> <a href="sam_protocol.html#ResultType"><span class="Identifier">ResultType</span></a>
+  <span class="Keyword">of</span> <span class="Identifier">I2PError</span><span class="Other">:</span>
+      <span class="Identifier">message</span><span class="Operator">*</span><span class="Other">:</span> <span class="Identifier">string</span>
+
+  <span class="Keyword">else</span><span class="Other">:</span>
+      <span class="Keyword">nil</span>
+
+  </pre></dt>
 <dd>
 
 
@@ -908,9 +919,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L158"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L162"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L158" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L162" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -920,9 +931,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L160"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L164"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L160" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L164" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -951,9 +962,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L182"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L186"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L182" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L186" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -968,9 +979,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Add 'n' and return as <tt class="docutils literal"><span class="pre"><span class="Identifier">string</span></span></tt>
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L269"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L273"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L269" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L273" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -980,9 +991,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Parse response from I2P
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L455"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L459"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L455" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L459" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -992,9 +1003,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L251"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L255"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L251" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L255" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1005,9 +1016,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L284"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L288"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L284" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L288" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1018,9 +1029,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L300"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L304"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L300" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L304" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1031,9 +1042,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L280"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L284"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L280" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L284" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1044,9 +1055,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L344"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L348"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L344" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L348" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1057,9 +1068,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L354"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L358"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L354" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L358" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1070,9 +1081,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L402"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L406"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L402" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L406" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1083,9 +1094,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L407"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L411"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L407" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L411" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1096,9 +1107,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L321"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L325"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L321" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L325" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1109,9 +1120,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L316"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L320"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L316" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L320" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1122,9 +1133,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L349"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L353"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L349" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L353" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1135,9 +1146,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L359"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L363"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L359" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L363" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1148,9 +1159,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L331"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L335"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L331" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L335" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1161,9 +1172,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L276"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L280"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L276" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L280" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1174,9 +1185,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L296"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L300"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L296" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L300" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1187,9 +1198,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L304"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L308"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L304" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L308" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1200,9 +1211,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L292"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L296"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L292" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L296" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1213,9 +1224,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L389"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L393"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L389" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L393" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1226,9 +1237,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L449"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L453"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L449" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L453" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1239,9 +1250,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L288"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L292"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L288" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L292" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1252,9 +1263,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L326"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L330"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L326" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L330" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1271,9 +1282,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L429"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L433"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L429" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L433" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1285,9 +1296,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L310"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L314"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L310" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L314" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1299,9 +1310,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L421"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L425"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L421" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L425" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1313,9 +1324,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L437"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L441"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L437" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L441" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1327,9 +1338,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L443"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L447"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L443" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L447" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1342,9 +1353,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L396"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L400"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L396" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L400" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1357,9 +1368,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L338"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L342"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L338" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L342" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1371,9 +1382,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L413"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L417"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L413" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L417" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1385,9 +1396,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L376"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L380"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L376" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L380" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1400,9 +1411,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L366"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L370"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L366" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L370" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1414,9 +1425,9 @@ class="link-seesrc" target="_blank">Source</a>
 <p>Use <tt class="docutils literal"><span class="pre"><span class="Identifier">with</span><span class="Operator">*</span></span></tt> methods to add more data and <tt class="docutils literal"><span class="pre"><span class="Identifier">build</span></span></tt> to get the final string</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L383"
+href="https://github.com/gabbhack/sam_protocol/tree/master/src/sam_protocol.nim#L387"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L383" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/gabbhack/sam_protocol/edit/devel/src/sam_protocol.nim#L387" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 </div>
@@ -1430,7 +1441,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-02-18 15:53:05 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-02-18 19:13:30 UTC</small>
       </div>
     </div>
   </div>
