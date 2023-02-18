@@ -1,6 +1,4 @@
-{.experimental: "caseStmtMacros".}
 import std/net
-import fusion/matching
 
 import sam_protocol
 

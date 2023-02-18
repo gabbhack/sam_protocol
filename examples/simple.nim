@@ -1,6 +1,6 @@
 {.experimental: "caseStmtMacros".}
 import std/net
-import fusion/matching
+import fusion/matching  # nimble install fusion
 
 import sam_protocol
 
