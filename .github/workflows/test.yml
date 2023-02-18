@@ -56,7 +56,7 @@ jobs:
         run: nimble install -d -y
 
       - name: Run tests
-        run: nimble test
+        run: nimble tests
 
       - name: Try to build docs
         run: nimble docs
