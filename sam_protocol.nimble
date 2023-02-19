@@ -5,7 +5,7 @@ author        = "Gabben"
 description   = "I2P SAM Protocol without any IO"
 license       = "MIT"
 srcDir        = "src"
-
+skipDirs      = @["tests", "examples"]
 
 # Dependencies
 
