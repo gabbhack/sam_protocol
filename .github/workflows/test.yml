@@ -21,7 +21,7 @@ jobs:
       matrix:
         nim: ['1.0.x', '1.2.x', '1.4.x', 'stable', 'devel']
         os: [ubuntu-latest]
-        cache-key: 'devel'
+
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
@@ -36,7 +36,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ~/.choosenim
-          key: ${{ runner.os }}-choosenim-${{ matrix.cache-key }}-${{ steps.get-date.outputs.date }}
+          key: ${{ runner.os }}-choosenim-${{ steps.get-date.outputs.date }}
 
       - name: Cache nimble
         id: cache-nimble
