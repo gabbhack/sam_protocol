@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.0"
+version       = "0.1.1"
 author        = "Gabben"
 description   = "I2P SAM Protocol without any IO"
 license       = "MIT"
