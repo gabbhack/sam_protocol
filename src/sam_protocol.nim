@@ -221,10 +221,20 @@ template stringHasSep(s: string, index: int, sep: char): bool =
 template isWhitespace(s: string, index: int): bool =
   s[index] in Whitespace
 
+template checkValueEndIndex() {.dirty.} =
+  valueEndIndex = last-1
+  if valueEndIndex == s.high or s[valueEndIndex+1] in Whitespace:
+    yield ((keyStartIndex, keyEndIndex), (valueStartIndex, valueEndIndex))
+    keyStartIndex = -1
+    keyEndIndex = -1
+    valueStartIndex = -1
+    valueEndIndex = -1
+  else:
+    valueEndIndex = -1
+
 iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int, finish: int], tuple[start: int, finish: int]) =
   ## Common code for split procs
   var last = startFrom
-  const sepLen = 1
 
   var
     keyStartIndex = -1
@@ -234,21 +244,18 @@ iterator keyValueSplit(s: string, sep: char, startFrom: int): (tuple[start: int,
 
   while last <= len(s):
     var first = last
-    while last < len(s) and not stringHasSep(s, last, sep) and not isWhitespace(s, last):
+    while last < len(s) and not isWhitespace(s, last) and not stringHasSep(s, last, sep):
       inc(last)
 
     if keyStartIndex == -1 and keyEndIndex == -1:
       keyStartIndex = first
       keyEndIndex = last-1
-    elif valueStartIndex == -1 and valueEndIndex == -1:
+    elif valueStartIndex == -1:
       valueStartIndex = first
-      valueEndIndex = last-1
-      yield ((keyStartIndex, keyEndIndex), (valueStartIndex, valueEndIndex))
-      keyStartIndex = -1
-      keyEndIndex = -1
-      valueStartIndex = -1
-      valueEndIndex = -1
-    inc(last, sepLen)
+      checkValueEndIndex() 
+    elif valueEndIndex == -1:
+      checkValueEndIndex() 
+    inc(last)
 
 {.push inline.}
 
