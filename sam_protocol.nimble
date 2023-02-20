@@ -20,6 +20,13 @@ task tests, "Run tests":
   exec "nimble test"
   exec "nimble test -d:release"
   exec "nimble test -d:release -d:danger"
-  exec "nimble test --gc:orc"
-  exec "nimble test --gc:orc -d:release"
-  exec "nimble test --gc:orc -d:release -d:danger"
+
+  when (NimMajor, NimMinor) >= (1, 2):
+    exec "nimble test --gc:arc"
+    exec "nimble test --gc:arc -d:release"
+    exec "nimble test --gc:arc -d:release -d:danger"
+
+  when (NimMajor, NimMinor) >= (1, 4):
+    exec "nimble test --gc:arc"
+    exec "nimble test --gc:arc -d:release"
+    exec "nimble test --gc:arc -d:release -d:danger"
