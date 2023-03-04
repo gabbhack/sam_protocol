@@ -6,7 +6,7 @@
 **I2P SAM Protocol without any IO.**
 
 ```bash
-nimble install https://github.com/gabbhack/sam_protocol
+nimble install samprotocol
 ```
 
 [Documentation](https://gabb.eu.org/sam_protocol)
