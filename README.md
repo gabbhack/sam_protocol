@@ -9,7 +9,7 @@
 nimble install samprotocol
 ```
 
-[Documentation](https://gabb.eu.org/sam_protocol)
+[Documentation](https://gabbhack.github.io/sam_protocol/)
 
 [Examples](https://github.com/gabbhack/sam_protocol/tree/master/examples)
 
